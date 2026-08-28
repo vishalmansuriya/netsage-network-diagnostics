@@ -17,7 +17,7 @@
     "clear ip nat translation *"
   ],
   "reasoning_summary": "NAT engines translate source addresses from inside-to-outside interfaces. Inverting the tags causes outbound client traffic to be ignored by the translation engine.",
-  "diagnosed_at": "2026-08-28T13:51:44Z",
+  "diagnosed_at": "2026-08-28T15:14:28Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

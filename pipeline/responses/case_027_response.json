@@ -14,7 +14,7 @@
     "write memory"
   ],
   "reasoning_summary": "When UDP payloads exceed 1400 bytes with DF bit set, dropping ICMP Type 3 Code 4 unreachables prevents endpoints from falling back to smaller frame sizes.",
-  "diagnosed_at": "2026-08-28T13:51:44Z",
+  "diagnosed_at": "2026-08-28T15:14:28Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "CLEAN",

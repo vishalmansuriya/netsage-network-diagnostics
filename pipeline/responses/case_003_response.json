@@ -13,7 +13,7 @@
     "write memory"
   ],
   "reasoning_summary": "Manual trunk allowed VLAN pruning dropped tagged 802.1Q frames for Voice VLAN 40 at the uplink switchport.",
-  "diagnosed_at": "2026-08-28T13:51:44Z",
+  "diagnosed_at": "2026-08-28T15:14:28Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

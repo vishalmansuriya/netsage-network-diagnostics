@@ -9,7 +9,7 @@
     "netsh interface ipv4 set address name=\"Local Area Connection\" static 192.168.10.50 255.255.255.0 192.168.10.1"
   ],
   "reasoning_summary": "With a /28 mask, 192.168.10.50 calculates its local broadcast domain as 192.168.10.48-63 and treats gateway 192.168.10.1 as remote, failing ARP resolution.",
-  "diagnosed_at": "2026-08-28T13:51:44Z",
+  "diagnosed_at": "2026-08-28T15:14:28Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

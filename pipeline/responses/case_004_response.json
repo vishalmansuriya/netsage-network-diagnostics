@@ -13,7 +13,7 @@
     "end"
   ],
   "reasoning_summary": "Connecting an unmanaged switch to a PortFast port sent Spanning Tree BPDUs, triggering BPDU Guard to protect the topology from loops by shutting down the port.",
-  "diagnosed_at": "2026-08-28T13:51:44Z",
+  "diagnosed_at": "2026-08-28T15:14:28Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

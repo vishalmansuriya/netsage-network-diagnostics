@@ -14,7 +14,7 @@
     "write memory"
   ],
   "reasoning_summary": "Gratuitous ARP replies from an attacker host overwrite the default gateway MAC in client ARP tables, enabling Man-in-the-Middle packet sniffing.",
-  "diagnosed_at": "2026-08-28T13:51:44Z",
+  "diagnosed_at": "2026-08-28T15:14:28Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

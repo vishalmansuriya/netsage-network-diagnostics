@@ -13,7 +13,7 @@
     "clear ip dhcp binding *"
   ],
   "reasoning_summary": "High guest turnaround exhausted the 51-address scope. Reducing DHCP lease time or expanding the subnet will free up addresses.",
-  "diagnosed_at": "2026-08-28T13:51:44Z",
+  "diagnosed_at": "2026-08-28T15:14:28Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

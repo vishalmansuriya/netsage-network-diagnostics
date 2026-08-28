@@ -35,7 +35,7 @@
 ## Scene 2: Data Architecture & Cisco Evidence Fidelity (1:00 – 2:30)
 - **Visual:** Open `data/cases.csv` and show sample evidence files in `data/raw_evidence/` (e.g. `case_001_show_output.txt` and `case_007_show_output.txt`).
 - **Presenter Talking Points:**
-  > "To ensure rigorous evaluation, we developed a benchmark of **32 synthetically generated, internally consistent network incident cases** across all 7 OSI layers.
+  > "To ensure rigorous evaluation, we developed a benchmark of **32 synthetically generated but internally consistent cases, validated for topology/IP/VLAN coherence** across all 7 OSI layers.
   >
   > Rather than using generic descriptions, our `data/raw_evidence/` folder contains realistic Cisco IOS CLI outputs—including `show ip route`, `show ip interface brief`, `show interfaces trunk`, `show access-lists`, and `show ip nat translations`.
   >

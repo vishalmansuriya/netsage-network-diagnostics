@@ -13,7 +13,7 @@
     "write memory"
   ],
   "reasoning_summary": "Routers do not forward Layer 2 broadcast packets by default. An ip helper-address relay agent is required to unicast DHCP requests across VLANs.",
-  "diagnosed_at": "2026-08-28T13:51:44Z",
+  "diagnosed_at": "2026-08-28T15:14:28Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

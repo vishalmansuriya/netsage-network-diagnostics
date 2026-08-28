@@ -143,7 +143,7 @@ ciscovip/
 
 ##  Dataset & OSI Layer Coverage
 
-The dataset contains **32 synthetically generated but internally consistent cases** with Cisco IOS-style CLI syntax. `scripts/build_data.py` is the data source: it materializes `data/cases.csv` and the 32 files in `data/raw_evidence/`. The cases are validated for topology, IP-addressing, subnet-mask, and VLAN coherence; the evidence files are generated test artifacts, not captures from live network devices.
+The dataset contains **32 synthetically generated but internally consistent cases, validated for topology/IP/VLAN coherence.** They use Cisco IOS-style CLI syntax. `scripts/build_data.py` is the data source: it materializes `data/cases.csv` and the 32 files in `data/raw_evidence/`; the evidence files are generated test artifacts, not captures from live network devices.
 
 | Concept Tag | Case Count | % of Dataset | Tested Scenarios |
 |---|---|---|---|
