@@ -12,7 +12,7 @@
     "clear ip dhcp binding 10.50.0.254"
   ],
   "reasoning_summary": "Any static IP in a subnet must be explicitly excluded from dynamic DHCP pools to prevent address hijacking.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

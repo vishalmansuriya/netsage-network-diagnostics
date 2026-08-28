@@ -14,7 +14,7 @@
     "end"
   ],
   "reasoning_summary": "Unmanaged Wi-Fi router answered DHCP discoveries faster than the corporate server. Enabling DHCP snooping treats edge ports as untrusted.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "CLEAN",

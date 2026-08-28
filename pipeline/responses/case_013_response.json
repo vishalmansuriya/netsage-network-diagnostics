@@ -12,7 +12,7 @@
     "write memory"
   ],
   "reasoning_summary": "Outbound packets from 192.168.20.0/24 fail to match ACL 10 and are forwarded un-NATted with private IPs, getting dropped by ISP edge filtering.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

@@ -12,7 +12,7 @@
     "clear ip nat translation *"
   ],
   "reasoning_summary": "When NAT pool leases the gateway IP, ARP queries from ISP router receive conflicting replies from both the gateway and the NAT router.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

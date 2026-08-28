@@ -13,7 +13,7 @@
     "write memory"
   ],
   "reasoning_summary": "CDP detects native VLAN mismatch between switches. Unencapsulated native traffic from VLAN 10 on SW1 arrives on SW2 and is treated as VLAN 20, causing broadcast leakage.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

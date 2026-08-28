@@ -12,7 +12,7 @@
     "clear ip dhcp binding 192.168.1.25"
   ],
   "reasoning_summary": "Overlapping DHCP scope with statically addressed peripherals results in IP collisions when the DHCP server leases out an in-use static IP.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

@@ -13,7 +13,7 @@
     "write memory"
   ],
   "reasoning_summary": "Digit transposition in the static NAT statement caused traffic destined for public DNS IP 203.0.113.205 to fail to translate to the private server.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

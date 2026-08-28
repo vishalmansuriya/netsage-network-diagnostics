@@ -10,7 +10,7 @@
     "sudo ip route add default via 10.10.20.1 dev eth0"
   ],
   "reasoning_summary": "A host cannot route to an off-subnet gateway IP without already having a route to that gateway's subnet.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

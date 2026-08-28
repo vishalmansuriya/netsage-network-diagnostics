@@ -9,7 +9,7 @@
     "Dist-SW(config)# spanning-tree vlan 1-4094 priority 32768"
   ],
   "reasoning_summary": "Root Guard protects the root bridge topology by blocking any port that receives BPDUs with lower numerical priority than the current root.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

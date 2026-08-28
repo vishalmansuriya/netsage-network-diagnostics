@@ -14,7 +14,7 @@
     "write memory"
   ],
   "reasoning_summary": "Cisco Lightweight APs discover and join WLCs using CAPWAP control (UDP 5246) and data (UDP 5247). Restrictive perimeter firewalls block these UDP ports by default.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

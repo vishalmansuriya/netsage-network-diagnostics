@@ -13,7 +13,7 @@
     "write memory"
   ],
   "reasoning_summary": "Stateful return traffic for outbound TCP sessions requires either stateful inspection (CBAC/Zone-Based Firewall) or an explicit 'established' permit in stateless ACLs.",
-  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "diagnosed_at": "2026-08-28T13:51:44Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",
