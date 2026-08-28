@@ -1,6 +1,7 @@
 """
-NetSage AI - Dataset and Raw Evidence Generator
-Generates 32 realistic, internally consistent Cisco networking cases and CLI evidence files.
+NetSage AI - Synthetic Benchmark Dataset & CLI Evidence Generator
+Generates 32 synthetically modeled, internally consistent Cisco networking cases and CLI evidence files.
+Validated for topology, IP addressing, subnet mask, and VLAN coherence.
 """
 import os
 import csv

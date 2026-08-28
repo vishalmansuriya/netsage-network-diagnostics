@@ -15,8 +15,7 @@ This document defines the schema, constraints, OSI layer classifications, concep
 | `expected_fault` | String | Yes | Exact technical root cause | Ground truth diagnosis verified by network engineers. |
 | `osi_layer` | Integer | Yes | `1` to `7` | Primary OSI reference model layer where the fault originates. |
 | `concept_tag` | Enum String | Yes | `VLAN`, `Routing`, `NAT`, `DHCP`, `ACL`, `DNS`, `Wireless/L2` | Core networking domain of the incident. |
-| `severity` | Enum String | Yes | `Low`, `Medium`, `High` | Operational impact of the incident on production services. |
-| `evidence_file` | String | Yes | `data/raw_evidence/case_XXX_show_output.txt` | Relative file path to the full, authentic Cisco IOS CLI evidence capture. |
+| `evidence_file` | String | Yes | `data/raw_evidence/case_XXX_show_output.txt` | Relative file path to the formatted Cisco IOS CLI evidence capture file. |
 
 ---
 

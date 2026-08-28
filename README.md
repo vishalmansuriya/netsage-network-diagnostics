@@ -276,5 +276,6 @@ Start-Process dashboard/index.html
 | **Demo Script** | 5–10 min presentation script | `demo/demo_script.md`, `demo/run_demo.bat` | ✅ **Complete** |
 
 ---
-
-*Developed for Cisco Internship Project 2 (Applied AI + Network Troubleshooting).*
+## Author 
+* Vishal Mansuriya
+* Jyoti Basu
