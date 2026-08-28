@@ -792,7 +792,7 @@ def generate():
             raw_path = os.path.join(RAW_DIR, filename)
             
             content = f"""================================================================================
-NETSAGE AI - RAW EVIDENCE CAPTURE
+NETSAGE AI - SYNTHETIC CLI EVIDENCE
 Case ID       : {case['case_id']}
 Concept Tag   : {case['concept_tag']}
 OSI Layer     : Layer {case['osi_layer']}

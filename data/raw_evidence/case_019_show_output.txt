@@ -1,5 +1,5 @@
 ================================================================================
-NETSAGE AI - RAW EVIDENCE CAPTURE
+NETSAGE AI - SYNTHETIC CLI EVIDENCE
 Case ID       : CASE-019
 Concept Tag   : DHCP
 OSI Layer     : Layer 3

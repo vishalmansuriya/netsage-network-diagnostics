@@ -1,5 +1,5 @@
 ================================================================================
-NETSAGE AI - RAW EVIDENCE CAPTURE
+NETSAGE AI - SYNTHETIC CLI EVIDENCE
 Case ID       : CASE-030
 Concept Tag   : Wireless/L2
 OSI Layer     : Layer 2

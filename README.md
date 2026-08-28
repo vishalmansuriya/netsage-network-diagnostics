@@ -42,7 +42,7 @@ Large language models troubleshooting production routers and switches often hall
 ```
 +-------------------------------------------------------------------------+
 |                  32+ Cisco IOS Incident Cases (data/cases.csv)          |
-|                  Authentic CLI Captures (data/raw_evidence/)            |
+|            Synthetic CLI Evidence (data/raw_evidence/)                  |
 +------------------------------------+------------------------------------+
                                      |
                                      v
@@ -88,7 +88,7 @@ ciscovip/
 ├── data/
 │   ├── cases.csv                      # 32 benchmark network cases with ground truth & OSI tags
 │   ├── schema.md                      # Comprehensive dataset schema and column taxonomy
-│   └── raw_evidence/                  # 32 authentic Cisco IOS CLI show-command text captures
+│   └── raw_evidence/                  # 32 synthetically generated Cisco IOS-style evidence files
 │       ├── case_001_show_output.txt
 │       └── ... (up to case_032_show_output.txt)
 │
@@ -143,7 +143,7 @@ ciscovip/
 
 ##  Dataset & OSI Layer Coverage
 
-The dataset contains **32 hand-authored, internally consistent cases** with realistic Cisco CLI syntax:
+The dataset contains **32 synthetically generated but internally consistent cases** with Cisco IOS-style CLI syntax. `scripts/build_data.py` is the data source: it materializes `data/cases.csv` and the 32 files in `data/raw_evidence/`. The cases are validated for topology, IP-addressing, subnet-mask, and VLAN coherence; the evidence files are generated test artifacts, not captures from live network devices.
 
 | Concept Tag | Case Count | % of Dataset | Tested Scenarios |
 |---|---|---|---|
@@ -264,7 +264,7 @@ Start-Process dashboard/index.html
 | Brief Deliverable | Expected Artifact | Location in Repository | Status |
 |---|---|---|---|
 | **30+ Case Dataset** | `cases.csv` + `schema.md` | `data/cases.csv`, `data/schema.md` | ✅ **32 Cases** |
-| **Raw CLI Evidence** | Authentic show command captures | `data/raw_evidence/case_001_*.txt` to `case_032_*.txt` | ✅ **32 Files** |
+| **CLI Evidence** | Synthetically generated Cisco IOS-style evidence | `data/raw_evidence/case_001_*.txt` to `case_032_*.txt` | ✅ **32 Files** |
 | **Structured Prompt** | Evidence-enforced JSON prompt | `prompts/diagnose_prompt.md` | ✅ **Prompt v2.0** |
 | **Few-Shot Examples** | Multi-domain worked examples | `prompts/few_shot_examples.md` | ✅ **3 Domains** |
 | **Prompt Versions** | Version history & changelog | `prompts/prompt_versions/` | ✅ **v1.0, v1.1, Changelog** |
