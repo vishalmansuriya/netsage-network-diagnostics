@@ -1,4 +1,4 @@
-# 🛡️ NetSage AI — Applied AI Network Diagnostic & HITL Governance Platform
+#  NetSage AI — Applied AI Network Diagnostic & HITL Governance Platform
 
 [![Cisco Internship Project](https://img.shields.io/badge/Cisco_Internship-Project_2-00bceb.svg?style=for-the-badge&logo=cisco&logoColor=white)](https://cisco.com)
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9+-3776ab.svg?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
@@ -10,7 +10,7 @@
 
 ---
 
-## 📑 Table of Contents
+##  Table of Contents
 
 - [Executive Summary](#-executive-summary)
 - [System Architecture & Workflow](#-system-architecture--workflow)
@@ -26,7 +26,7 @@
 
 ---
 
-## 💡 Executive Summary
+##  Executive Summary
 
 Large language models troubleshooting production routers and switches often hallucinate causes, misdiagnose multi-layer anomalies, or suggest dangerous configuration commands.
 
@@ -37,7 +37,7 @@ Large language models troubleshooting production routers and switches often hall
 
 ---
 
-## 🏗️ System Architecture & Workflow
+##  System Architecture & Workflow
 
 ```
 +-------------------------------------------------------------------------+
@@ -78,7 +78,7 @@ Large language models troubleshooting production routers and switches often hall
 
 ---
 
-## 📂 Repository Structure
+##  Repository Structure
 
 Every folder maps 1:1 onto the required deliverables table in the internship brief:
 
@@ -141,7 +141,7 @@ ciscovip/
 
 ---
 
-## 📊 Dataset & OSI Layer Coverage
+##  Dataset & OSI Layer Coverage
 
 The dataset contains **32 hand-authored, internally consistent cases** with realistic Cisco CLI syntax:
 
@@ -157,7 +157,7 @@ The dataset contains **32 hand-authored, internally consistent cases** with real
 
 ---
 
-## ⚙️ Deterministic Rule Checker Engine
+##  Deterministic Rule Checker Engine
 
 The deterministic engine (`checker/rule_checker.py`) runs independently of the AI and serves as our objective ground truth:
 
@@ -173,7 +173,7 @@ python checker/rule_checker.py --all --save-sample
 
 ---
 
-## 🧠 Prompt Engineering & Evidence Grounding
+##  Prompt Engineering & Evidence Grounding
 
 The AI diagnostic prompt (`prompts/diagnose_prompt.md`) enforces strict JSON schema and evidence citations:
 
@@ -196,7 +196,7 @@ The AI diagnostic prompt (`prompts/diagnose_prompt.md`) enforces strict JSON sch
 
 ---
 
-## 👥 Human-in-the-Loop Audit & Responsible AI
+##  Human-in-the-Loop Audit & Responsible AI
 
 Every AI diagnosis is reviewed by a human network engineer before acceptance:
 
@@ -222,7 +222,7 @@ Deterministic Rule Hit Rate: 90.6% (29/32 cases caught deterministically)
 
 ---
 
-## 💻 Interactive Analytics Web Dashboard
+##  Interactive Analytics Web Dashboard
 
 The web dashboard (`dashboard/index.html`) features a modern **terminal/hacker dark-mode aesthetic** with:
 - **Live Terminal Trace (Hero Section):** Real-time typing animation with interactive `[ACCEPT]`, `[EDIT]`, and `[REJECT]` buttons.
@@ -233,7 +233,7 @@ The web dashboard (`dashboard/index.html`) features a modern **terminal/hacker d
 
 ---
 
-## 🚀 Quick Start & Execution Guide
+##  Quick Start & Execution Guide
 
 ### Option 1: 1-Click Batch Runner (Windows)
 Double-click `demo/run_demo.bat` or run:
@@ -259,7 +259,7 @@ Start-Process dashboard/index.html
 
 ---
 
-## 📋 Evaluation Rubric Compliance Matrix
+##  Evaluation Rubric Compliance Matrix
 
 | Brief Deliverable | Expected Artifact | Location in Repository | Status |
 |---|---|---|---|
@@ -274,14 +274,6 @@ Start-Process dashboard/index.html
 | **Responsible AI Log** | Writeup of $\ge 5$ corrected cases | `review/responsible_ai_log.md` | ✅ **6 Case Studies** |
 | **Analytics Dashboard** | Live metrics & case diff viewer | `dashboard/index.html`, `dashboard/dashboard.py` | ✅ **Web + CLI** |
 | **Demo Script** | 5–10 min presentation script | `demo/demo_script.md`, `demo/run_demo.bat` | ✅ **Complete** |
-
----
-
-## 👨‍💻 Team & Contributions
-
-- **Sanjay (Lead Project Architect & HITL Lead):** Dataset curation, Cisco IOS show-output synthesis, Human-in-the-Loop review log authoring, Responsible AI audit writeup, and interactive dashboard development.
-- **Rule Engine Subsystem:** Modular deterministic rule plugins (`duplicate_ip`, `mask_mismatch`, `gateway_mismatch`, `interface_down`, `missing_vlan`, `missing_route`, `acl_deny`, `nat_overload`).
-- **AI Pipeline Subsystem:** Evidence citation enforcement, structured prompt engineering, multi-provider API client with fallback simulation, and schema validation.
 
 ---
 
