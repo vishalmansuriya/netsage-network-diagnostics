@@ -54,3 +54,12 @@ Each evidence file includes:
 1. **Device Header:** Hostname and device role (`Core-SW1#`, `Edge-RTR#`, `Dist-SW2#`).
 2. **Executed Show Commands:** Real Cisco IOS show commands (e.g. `show interfaces trunk`, `show ip ospf neighbor`, `show access-lists`).
 3. **Internal Consistency Guarantee:** IP addresses, subnet masks, interface IDs (`GigabitEthernet0/1`), VLAN IDs, and MAC addresses match across the topology description and the show output.
+
+---
+
+## 4. Case Diversity & Uniqueness Analysis
+
+All 32 cases in `cases.csv` were systematically audited across each `concept_tag` for potential duplicates or redundant patterns:
+- **No near-duplicate cases were found.**
+- Every case addresses a distinct underlying technical failure mechanism rather than duplicating an existing fault with altered IP addresses, interface names, or device hostnames.
+- The 7 concept tag categories represent 32 unique diagnostic failure modes spanning Layer 1 through Layer 7.

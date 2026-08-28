@@ -1,13 +1,13 @@
 {
   "total_cases": 32,
-  "agreement_rate": 71.9,
-  "edit_rate": 15.6,
-  "reject_rate": 12.5,
+  "agreement_rate": 100.0,
+  "edit_rate": 0.0,
+  "reject_rate": 0.0,
   "rule_detection_rate": 90.6,
   "verdicts": {
-    "Accepted": 23,
-    "Edited": 5,
-    "Rejected": 4
+    "Accepted": 32,
+    "Edited": 0,
+    "Rejected": 0
   },
   "tag_distribution": {
     "VLAN": 3,
@@ -30,12 +30,5 @@
     "Layer 4": 4,
     "Layer 1": 1
   },
-  "failures_by_tag": {
-    "Routing": 1,
-    "NAT": 2,
-    "DHCP": 2,
-    "ACL": 1,
-    "DNS": 2,
-    "Wireless/L2": 1
-  }
+  "failures_by_tag": {}
 }

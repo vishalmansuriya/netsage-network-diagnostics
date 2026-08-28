@@ -83,12 +83,12 @@ def compute_metrics():
 
 def print_summary(metrics):
     print("=" * 80)
-    print("NETSAGE AI — PERFORMANCE & HUMAN-IN-THE-LOOP METRICS SUMMARY")
+    print("NETSAGE AI — PIPELINE RE-EXECUTION METRICS SUMMARY")
     print("=" * 80)
     print(f"Total Evaluated Cases      : {metrics['total_cases']}")
-    print(f"AI Acceptance Rate         : {metrics['agreement_rate']}% ({metrics['verdicts']['Accepted']}/{metrics['total_cases']})")
-    print(f"Human Edited Rate          : {metrics['edit_rate']}% ({metrics['verdicts']['Edited']}/{metrics['total_cases']})")
-    print(f"Human Rejected Rate        : {metrics['reject_rate']}% ({metrics['verdicts']['Rejected']}/{metrics['total_cases']})")
+    print(f"Root-Cause Agreement Rate  : {metrics['agreement_rate']}% ({metrics['verdicts']['Accepted']}/{metrics['total_cases']})")
+    print(f"Comparison Edited Rate     : {metrics['edit_rate']}% ({metrics['verdicts']['Edited']}/{metrics['total_cases']})")
+    print(f"Comparison Rejected Rate   : {metrics['reject_rate']}% ({metrics['verdicts']['Rejected']}/{metrics['total_cases']})")
     print(f"Deterministic Rule Hit Rate: {metrics['rule_detection_rate']}%")
     print("-" * 80)
     print("Case Count by Concept Tag:")

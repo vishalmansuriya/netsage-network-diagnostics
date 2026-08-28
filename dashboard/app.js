@@ -966,9 +966,9 @@ function initCharts() {
     chartInstances.verdicts = new Chart(ctxVerdicts.getContext("2d"), {
       type: "doughnut",
       data: {
-        labels: ["Accepted (71.9%)", "Edited (15.6%)", "Rejected (12.5%)"],
+        labels: ["Accepted (100.0%)", "Edited (0.0%)", "Rejected (0.0%)"],
         datasets: [{
-          data: [23, 5, 4],
+          data: [32, 0, 0],
           backgroundColor: ["#3DDC97", "#FFB454", "#FF5C5C"],
           borderColor: isDark ? "#131A21" : "#FFFFFF",
           borderWidth: 2

@@ -13,7 +13,7 @@
     "clear ip ospf process"
   ],
   "reasoning_summary": "During the OSPF EXSTART state, routers negotiate master/slave and exchange DBD packets. If MTU does not match, the larger DBD packet is dropped, preventing transition to FULL.",
-  "diagnosed_at": "2026-08-28T15:14:28Z",
+  "diagnosed_at": "2026-08-28T15:45:40Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

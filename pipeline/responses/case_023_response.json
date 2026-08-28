@@ -13,7 +13,7 @@
     "write memory"
   ],
   "reasoning_summary": "Standard DNS client queries utilize UDP port 53. Because only TCP port 53 was permitted, standard queries hit the implicit deny.",
-  "diagnosed_at": "2026-08-28T15:14:28Z",
+  "diagnosed_at": "2026-08-28T15:45:40Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

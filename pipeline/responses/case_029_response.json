@@ -13,7 +13,7 @@
     "end"
   ],
   "reasoning_summary": "Port Security enforces sticky or maximum MAC address thresholds. Connecting an unmanaged hub or second device immediately trips the shutdown violation action.",
-  "diagnosed_at": "2026-08-28T15:14:28Z",
+  "diagnosed_at": "2026-08-28T15:45:40Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

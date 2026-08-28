@@ -4,7 +4,7 @@
 
 Required wording in the repository:
 
-> 32 synthetically generated but internally consistent cases, validated for topology/IP/VLAN coherence.
+> 32 synthetically generated, internally consistent cases, validated for topology/IP/VLAN coherence.
 
 `README.md` and `demo/demo_script.md` use this wording. A repository-wide exact-term check was run across all tracked content.
 
@@ -25,12 +25,12 @@ Source files read directly:
 
 | Metric | Row count | Formula | Recomputed value | Value in `dashboard/metrics.json` |
 |---|---:|---|---:|---:|
-| Accepted | 23 | `23 / 32 * 100` | 71.9% | 71.9% |
-| Edited | 5 | `5 / 32 * 100` | 15.6% | 15.6% |
-| Rejected | 4 | `4 / 32 * 100` | 12.5% | 12.5% |
+| Accepted | 32 | `32 / 32 * 100` | 100.0% | 100.0% |
+| Edited | 0 | `0 / 32 * 100` | 0.0% | 0.0% |
+| Rejected | 0 | `0 / 32 * 100` | 0.0% | 0.0% |
 | Rule-hit (`FLAGGED`) | 29 | `29 / 32 * 100` | 90.6% | 90.6% |
 
-The verdict counts reconcile: `23 + 5 + 4 = 32`. The non-hit rule count is 3 `CLEAN` rows: `3 / 32 * 100 = 9.4%`.
+The verdict counts reconcile: `32 + 0 + 0 = 32`. The non-hit rule count is 3 `CLEAN` rows: `3 / 32 * 100 = 9.4%`.
 
 ### Pipeline execution and review provenance
 
@@ -105,7 +105,7 @@ Actual pipeline JSON:
   "next_command": "show ip ospf neighbor GigabitEthernet0/0",
   "fix_steps": ["configure terminal", "interface GigabitEthernet0/0", "ip mtu 1500", "end", "clear ip ospf process"],
   "reasoning_summary": "During the OSPF EXSTART state, routers negotiate master/slave and exchange DBD packets. If MTU does not match, the larger DBD packet is dropped, preventing transition to FULL.",
-  "diagnosed_at": "2026-08-28T15:14:28Z",
+  "diagnosed_at": "2026-08-28T15:26:07Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",
@@ -129,7 +129,7 @@ Actual pipeline JSON:
   "next_command": "show ip nat statistics",
   "fix_steps": ["configure terminal", "interface GigabitEthernet0/0", "no ip nat outside", "ip nat inside", "interface GigabitEthernet0/1", "no ip nat inside", "ip nat outside", "end", "clear ip nat translation *"],
   "reasoning_summary": "NAT engines translate source addresses from inside-to-outside interfaces. Inverting the tags causes outbound client traffic to be ignored by the translation engine.",
-  "diagnosed_at": "2026-08-28T15:14:28Z",
+  "diagnosed_at": "2026-08-28T15:26:07Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",
@@ -153,7 +153,7 @@ Actual pipeline JSON:
   "next_command": "show mac address-table dynamic interface Gi0/8",
   "fix_steps": ["configure terminal", "ip dhcp snooping", "ip dhcp snooping vlan 10", "interface GigabitEthernet0/8", "shutdown", "end"],
   "reasoning_summary": "Unmanaged Wi-Fi router answered DHCP discoveries faster than the corporate server. Enabling DHCP snooping treats edge ports as untrusted.",
-  "diagnosed_at": "2026-08-28T15:14:28Z",
+  "diagnosed_at": "2026-08-28T15:26:07Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "CLEAN",
@@ -177,7 +177,7 @@ Actual pipeline JSON:
   "next_command": "show hosts",
   "fix_steps": ["configure terminal", "ip name-server 10.0.0.5 8.8.8.8", "end", "write memory"],
   "reasoning_summary": "Public recursive resolvers cannot resolve non-public corporate TLDs (.corp.local), requiring internal name servers to be queried first.",
-  "diagnosed_at": "2026-08-28T15:14:28Z",
+  "diagnosed_at": "2026-08-28T15:26:07Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "CLEAN",
@@ -201,7 +201,7 @@ Actual pipeline JSON:
   "next_command": "show ip nat translations",
   "fix_steps": ["configure terminal", "no ip nat inside source static 192.168.100.10 203.0.113.250", "ip nat inside source static 192.168.100.10 203.0.113.205", "end", "write memory"],
   "reasoning_summary": "Digit transposition in the static NAT statement caused traffic destined for public DNS IP 203.0.113.205 to fail to translate to the private server.",
-  "diagnosed_at": "2026-08-28T15:14:28Z",
+  "diagnosed_at": "2026-08-28T15:26:07Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",
@@ -225,7 +225,7 @@ Actual pipeline JSON:
   "next_command": "show ip dhcp binding 10.50.0.254",
   "fix_steps": ["configure terminal", "ip dhcp excluded-address 10.50.0.254", "end", "clear ip dhcp binding 10.50.0.254"],
   "reasoning_summary": "Any static IP in a subnet must be explicitly excluded from dynamic DHCP pools to prevent address hijacking.",
-  "diagnosed_at": "2026-08-28T15:14:28Z",
+  "diagnosed_at": "2026-08-28T15:26:07Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",

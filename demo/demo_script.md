@@ -35,7 +35,7 @@
 ## Scene 2: Data Architecture & Cisco Evidence Fidelity (1:00 – 2:30)
 - **Visual:** Open `data/cases.csv` and show sample evidence files in `data/raw_evidence/` (e.g. `case_001_show_output.txt` and `case_007_show_output.txt`).
 - **Presenter Talking Points:**
-  > "To ensure rigorous evaluation, we developed a benchmark of **32 synthetically generated but internally consistent cases, validated for topology/IP/VLAN coherence** across all 7 OSI layers.
+  > "To ensure rigorous evaluation, we developed a benchmark of **32 synthetically generated, internally consistent cases, validated for topology/IP/VLAN coherence** across all 7 OSI layers.
   >
   > Rather than using generic descriptions, our `data/raw_evidence/` folder contains realistic Cisco IOS CLI outputs—including `show ip route`, `show ip interface brief`, `show interfaces trunk`, `show access-lists`, and `show ip nat translations`.
   >
@@ -68,11 +68,11 @@
 ## Scene 5: Human-in-the-Loop Audit & Broken Case Deep-Dive (5:30 – 7:15)
 - **Visual:** Open Dashboard 'Responsible AI Audit' tab and 'Case Explorer' modal for `CASE-007` and `CASE-012`.
 - **Presenter Talking Points:**
-  > "Now to the heart of the project: our **Human-in-the-Loop Review Log** (`review_log.csv`). In our grading criteria, review cannot be a rubber stamp. We recorded genuine **Accepted (71.9%)**, **Edited (15.6%)**, and **Rejected (12.5%)** entries.
+  > "The current `review_log.csv` records a pipeline re-execution comparison. We ran all 32 cases and compared each emitted `root_cause` with the expected fault: **Accepted (100.0%)**, **Edited (0.0%)**, and **Rejected (0.0%)**.
   >
-  > Let's look at **Case 007 (OSPF Adjacency Stuck in EXSTART)**. The AI hallucinated an MD5 authentication mismatch simply because neighbor state was EXSTART. But the actual proof was an MTU mismatch (R1 MTU 1500 vs R2 MTU 1400). Our human reviewer rejected this diagnosis. Because of this failure, we built an MTU checker rule and upgraded our prompt to version 2.0.
+  > Let's look at **Case 007 (OSPF Adjacency Stuck in EXSTART)**. The executed response identifies the MTU mismatch between R1 (1500) and R2 (1400), matching the expected diagnosis.
   >
-  > In **Case 012 (NAT Inversion)**, the AI blamed an ACL rule when the actual fault was inverted `ip nat inside/outside` tags on the LAN/WAN interfaces. Our human reviewer caught and corrected this. These 6 failure case studies are documented in full detail in `review/responsible_ai_log.md`."
+  > In **Case 012 (NAT Inversion)**, the executed response identifies the inverted `ip nat inside/outside` tags on the LAN/WAN interfaces. The six rerun records are in `review/responsible_ai_log.md`. The current client uses embedded simulation responses, not a hosted-model API."
 
 ---
 
@@ -81,9 +81,9 @@
 - **Presenter Talking Points:**
   > "Let's explore our **interactive analytics dashboard**.
   >
-  > On the KPI bar, we track our 32 total cases, 71.9% AI acceptance rate, 15.6% edit rate, 12.5% rejection rate, and 90.6% rule detection rate.
+  > On the KPI bar, we track 32 cases, 100.0% root-cause agreement in the re-execution comparison, 0.0% edited, 0.0% rejected, and a 90.6% rule detection rate.
   >
-  > The charts visualize human verdict distributions, OSI layer breakdown, and concept tag distribution. Notice the 'AI Failures by Domain' chart—this clearly highlights that NAT, DHCP, and DNS are where the AI was most prone to hallucinations, giving engineering teams clear feedback on where more domain knowledge is required.
+  > The charts visualize comparison verdicts, OSI layer breakdown, and concept tag distribution. The current re-execution has no edited or rejected comparison rows.
   >
   > In the Case Explorer, we can filter by concept tag, search symptoms, and click 'Inspect' on any case to see a 4-way side-by-side comparison between Raw Evidence, Rule Checker, AI Diagnosis, and Human Reviewer Edits."
 

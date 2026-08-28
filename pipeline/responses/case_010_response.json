@@ -14,7 +14,7 @@
     "clear ip bgp 198.51.100.1"
   ],
   "reasoning_summary": "BGP OPEN message validation rejects peering when the expected AS number in the neighbor statement mismatches the remote router's local AS.",
-  "diagnosed_at": "2026-08-28T15:14:28Z",
+  "diagnosed_at": "2026-08-28T15:45:40Z",
   "engine_mode": "simulation",
   "schema_valid": true,
   "rule_checker_verdict": "FLAGGED",
