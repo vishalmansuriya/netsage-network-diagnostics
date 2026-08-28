@@ -1,0 +1,20 @@
+{
+  "case_id": "CASE-013",
+  "root_cause": "NAT Access-List 10 permits 192.168.10.0/24 instead of the active LAN subnet 192.168.20.0/24, causing all traffic to bypass NAT translation.",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "show access-lists 10: 'permit 192.168.10.0 (0 matches)' vs Gi0/0 IP 192.168.20.1/24; NAT stats show Hits: 0 Misses: 142.",
+  "next_command": "show access-lists 10",
+  "fix_steps": [
+    "configure terminal",
+    "access-list 10 permit 192.168.20.0 0.0.0.255",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Outbound packets from 192.168.20.0/24 fail to match ACL 10 and are forwarded un-NATted with private IPs, getting dropped by ISP edge filtering.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "NAT ACL permits 192.168.10.0 but local LAN is on 192.168.20.1. Zero packets matched the NAT rule (Hits: 0, Misses: >0)."
+}

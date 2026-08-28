@@ -1,0 +1,36 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-025
+Concept Tag   : DNS
+OSI Layer     : Layer 7
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Primary DNS Server 10.10.1.20 was decommissioned; new AD DNS server is 10.10.1.50.
+
+[SYMPTOM DESCRIPTION]
+All domain workstation logins and internal portal accesses fail with 'Domain controller cannot be contacted' after server maintenance.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Core-RTR# show run | section ip dhcp pool
+ip dhcp pool CORP_USERS
+ network 10.10.10.0 255.255.255.0
+ default-router 10.10.10.1
+ dns-server 10.10.1.20
+
+Core-RTR# ping 10.10.1.20
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.10.1.20, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+
+Core-RTR# ping 10.10.1.50
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.10.1.50, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5)
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+DHCP pool CORP_USERS is configured with decommissioned DNS server IP 10.10.1.20 instead of the active DNS server 10.10.1.50.
+================================================================================

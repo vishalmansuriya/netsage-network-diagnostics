@@ -1,0 +1,35 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-031
+Concept Tag   : Wireless/L2
+OSI Layer     : Layer 2
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Core-SW is designated STP Root Bridge with Root Guard enabled on downstream ports. Dist-SW was booted with default STP priority 32768.
+
+[SYMPTOM DESCRIPTION]
+Uplink port Gi0/24 on Core-SW connecting to newly added Distribution Switch has entered blocking state.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Core-SW# show spanning-tree inconsistentports
+Name                 Interface              Inconsistency
+-------------------- ---------------------- ------------------
+VLAN0001             GigabitEthernet0/24    Root Inconsistent
+VLAN0010             GigabitEthernet0/24    Root Inconsistent
+
+Core-SW# show log | include %SPANTREE-2-ROOTGUARDBLOCK
+%SPANTREE-2-ROOTGUARDBLOCK: Root Guard block port GigabitEthernet0/24 on VLAN0001.
+%SPANTREE-2-ROOTGUARDBLOCK: Root Guard block port GigabitEthernet0/24 on VLAN0010.
+
+Dist-SW# show spanning-tree
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    0
+             Address     001b.d45a.1100
+             This bridge is the root
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+STP Root Guard on Core-SW Gi0/24 blocked the port into 'Root Inconsistent' state after receiving superior BPDUs with Priority 0 from Dist-SW.
+================================================================================

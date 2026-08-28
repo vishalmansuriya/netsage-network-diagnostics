@@ -1,0 +1,32 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-011
+Concept Tag   : Routing
+OSI Layer     : Layer 3
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Edge-RTR configured with static route to 172.20.0.0/16 via next-hop IP 10.254.1.1.
+
+[SYMPTOM DESCRIPTION]
+Static route to remote subnet 172.20.0.0/16 is not present in the routing table despite being in the running configuration.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Edge-RTR# show run | include ip route
+ip route 172.20.0.0 255.255.0.0 10.254.1.1
+
+Edge-RTR# show ip route 10.254.1.1
+% Network not in table
+
+Edge-RTR# show ip route 172.20.0.0
+% Network not in table
+
+Edge-RTR# show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.168.1.1     YES NVRAM  up                    up
+GigabitEthernet0/1         10.100.1.1      YES NVRAM  up                    up
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Next-hop IP 10.254.1.1 is unreachable and has no matching entry in the routing table (recursive lookup failure), preventing static route installation.
+================================================================================

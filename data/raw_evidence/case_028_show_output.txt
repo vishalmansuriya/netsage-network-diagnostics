@@ -1,0 +1,28 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-028
+Concept Tag   : Wireless/L2
+OSI Layer     : Layer 1
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+File Server connected to Switch port Gi0/3. Server NIC is hardcoded to 100Mbps Full Duplex.
+
+[SYMPTOM DESCRIPTION]
+File transfers between File Server and clients are extremely sluggish with excessive packet drops and late collisions.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Switch-1# show interfaces GigabitEthernet0/3
+GigabitEthernet0/3 is up, line protocol is up (connected)
+  Hardware is Gigabit Ethernet, address is 0014.f25a.3303
+  Auto-duplex, Auto-speed
+  Half-duplex, 100Mb/s, media type is 10/100/1000BaseTX
+  5829314 packets input, 492019482 bytes, 0 no buffer
+  Received 28194 broadcasts, 0 runts, 0 giants, 0 throttles
+  49102 input errors, 48920 CRC, 0 frame, 0 overrun, 0 ignored
+  38192 late collision, 18290 deferred, 12 lost carrier
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Duplex mismatch on port Gi0/3: Switch auto-negotiated to Half-Duplex because server NIC was hardcoded to Full-Duplex without autonegotiation, causing late collisions and CRC errors.
+================================================================================

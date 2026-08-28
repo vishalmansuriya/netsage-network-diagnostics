@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-001",
+  "root_cause": "802.1Q trunk Native VLAN mismatch between Dist-SW1 (Native VLAN 10) and Dist-SW2 (Native VLAN 20) on interface Gi0/1.",
+  "osi_layer": 2,
+  "confidence": "high",
+  "evidence": "Dist-SW1# show log: '%CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on GigabitEthernet0/1 (10), with Dist-SW2 GigabitEthernet0/1 (20)' and 'show interfaces trunk' shows Native vlan 10.",
+  "next_command": "show interfaces GigabitEthernet0/1 trunk",
+  "fix_steps": [
+    "configure terminal",
+    "interface GigabitEthernet0/1",
+    "switchport trunk native vlan 20",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "CDP detects native VLAN mismatch between switches. Unencapsulated native traffic from VLAN 10 on SW1 arrives on SW2 and is treated as VLAN 20, causing broadcast leakage.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Native VLAN mismatch on trunk link GigabitEthernet0/1: Local Native VLAN is 10, but remote Dist-SW2 GigabitEthernet0/1 is Native VLAN 20."
+}

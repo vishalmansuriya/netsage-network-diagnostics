@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-015",
+  "root_cause": "Static 1-to-1 NAT configuration typo: mapped inside server 192.168.100.10 to 203.0.113.250 instead of registered public DNS IP 203.0.113.205.",
+  "osi_layer": 3,
+  "confidence": "medium",
+  "evidence": "show run contains 'ip nat inside source static 192.168.100.10 203.0.113.250' while DNS query returns 203.0.113.205.",
+  "next_command": "show ip nat translations",
+  "fix_steps": [
+    "configure terminal",
+    "no ip nat inside source static 192.168.100.10 203.0.113.250",
+    "ip nat inside source static 192.168.100.10 203.0.113.205",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Digit transposition in the static NAT statement caused traffic destined for public DNS IP 203.0.113.205 to fail to translate to the private server.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Static NAT outside IP (203.0.113.250) does not match public DNS A-record (203.0.113.205) due to digit transposition."
+}

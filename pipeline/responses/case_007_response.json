@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-007",
+  "root_cause": "OSPF interface MTU mismatch on transit link Gi0/0 (Core-R1 MTU 1500 vs Dist-R2 MTU 1400) halting neighbor adjacency in EXSTART/DBD state.",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "Core-R1 Gi0/0 'MTU is 1500 bytes', Dist-R2 Gi0/0 'MTU is 1400 bytes'; 'show ip ospf neighbor' shows State: EXSTART/  -.",
+  "next_command": "show ip ospf neighbor GigabitEthernet0/0",
+  "fix_steps": [
+    "configure terminal",
+    "interface GigabitEthernet0/0",
+    "ip mtu 1500",
+    "end",
+    "clear ip ospf process"
+  ],
+  "reasoning_summary": "During the OSPF EXSTART state, routers negotiate master/slave and exchange DBD packets. If MTU does not match, the larger DBD packet is dropped, preventing transition to FULL.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "OSPF MTU mismatch between neighbors: Local MTU is 1500 bytes vs Remote MTU 1400 bytes, causing EXSTART/DBD state hang."
+}

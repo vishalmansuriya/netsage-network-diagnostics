@@ -1,0 +1,22 @@
+{
+  "case_id": "CASE-030",
+  "root_cause": "ARP Cache Poisoning / Gateway MAC Spoofing attack by rogue host 192.168.1.199 (MAC a483-e721-99aa) because Dynamic ARP Inspection (DAI) is disabled.",
+  "osi_layer": 2,
+  "confidence": "high",
+  "evidence": "Host-PC arp -a shows both 192.168.1.1 and 192.168.1.199 mapped to physical address a483-e721-99aa; 'show ip arp inspection' shows Vlan 1 DAI is disabled.",
+  "next_command": "show ip arp inspection vlan 1",
+  "fix_steps": [
+    "configure terminal",
+    "ip dhcp snooping",
+    "ip dhcp snooping vlan 1",
+    "ip arp inspection vlan 1",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Gratuitous ARP replies from an attacker host overwrite the default gateway MAC in client ARP tables, enabling Man-in-the-Middle packet sniffing.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "ARP Poisoning / Gateway MAC spoofing detected: MAC a483.e721.99aa claims both gateway 192.168.1.1 and host 192.168.1.199."
+}

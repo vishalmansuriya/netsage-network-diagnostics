@@ -1,0 +1,39 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-007
+Concept Tag   : Routing
+OSI Layer     : Layer 3
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Core-R1 (Gi0/0, 10.0.0.1/30) connects to Dist-R2 (Gi0/0, 10.0.0.2/30) in OSPF Area 0.
+
+[SYMPTOM DESCRIPTION]
+OSPF neighbor adjacency between Core-R1 and Dist-R2 is stuck in EXSTART/EXCHANGE state; routing updates are not exchanged.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Core-R1# show ip ospf neighbor
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+192.168.2.2       1   EXSTART/  -     00:00:33    10.0.0.2        GigabitEthernet0/0
+
+Core-R1# show ip interface GigabitEthernet0/0
+GigabitEthernet0/0 is up, line protocol is up
+  Internet address is 10.0.0.1/30
+  Broadcast address is 255.255.255.255
+  Address determined by setup command
+  MTU is 1500 bytes
+
+Dist-R2# show ip interface GigabitEthernet0/0
+GigabitEthernet0/0 is up, line protocol is up
+  Internet address is 10.0.0.2/30
+  Broadcast address is 255.255.255.255
+  Address determined by setup command
+  MTU is 1400 bytes
+
+Dist-R2# show log | include %OSPF-5-ADJCHG
+%OSPF-5-ADJCHG: Process 1, Nbr 192.168.1.1 on GigabitEthernet0/0 from LOADING to EXSTART, Seq Number Mismatch
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+OSPF interface MTU mismatch on link Gi0/0 (Core-R1 MTU 1500 vs Dist-R2 MTU 1400), causing DBD packet exchange failure and EXSTART hang.
+================================================================================

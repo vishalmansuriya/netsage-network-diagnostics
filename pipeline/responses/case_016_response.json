@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-016",
+  "root_cause": "Missing 'ip helper-address 10.1.1.50' relay configuration on interface Vlan20 on Core-SW1.",
+  "osi_layer": 7,
+  "confidence": "high",
+  "evidence": "interface Vlan20 lacks 'ip helper-address' while DHCP server is located in management VLAN at 10.1.1.50.",
+  "next_command": "show ip interface Vlan20 | include Helper",
+  "fix_steps": [
+    "configure terminal",
+    "interface Vlan20",
+    "ip helper-address 10.1.1.50",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Routers do not forward Layer 2 broadcast packets by default. An ip helper-address relay agent is required to unicast DHCP requests across VLANs.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Missing 'ip helper-address' on interface Vlan20 to forward broadcast DHCP requests across subnets."
+}

@@ -1,0 +1,22 @@
+{
+  "case_id": "CASE-010",
+  "root_cause": "eBGP peering session fails due to remote-as number mismatch (Edge-RTR configured with remote-as 65510 while ISP is in AS 65500).",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "Edge-RTR configured 'neighbor 198.51.100.1 remote-as 65510' vs ISP-RTR 'router bgp 65500'; BGP state is stuck in Active.",
+  "next_command": "show ip bgp summary",
+  "fix_steps": [
+    "configure terminal",
+    "router bgp 65001",
+    "no neighbor 198.51.100.1 remote-as 65510",
+    "neighbor 198.51.100.1 remote-as 65500",
+    "end",
+    "clear ip bgp 198.51.100.1"
+  ],
+  "reasoning_summary": "BGP OPEN message validation rejects peering when the expected AS number in the neighbor statement mismatches the remote router's local AS.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "BGP remote-as mismatch: Configured remote-as 65510 does not match ISP AS 65500, holding session in Active state."
+}

@@ -1,0 +1,30 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-009
+Concept Tag   : Routing
+OSI Layer     : Layer 3
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+HQ-RTR1 (172.16.1.1/30) and Core-RTR2 (172.16.1.2/30) are connected via Gi0/2 in OSPF Area 0.
+
+[SYMPTOM DESCRIPTION]
+Router HQ-RTR1 cannot form OSPF adjacency with Core-RTR2 across point-to-point link Gi0/2.
+
+[RAW CISCO IOS CLI EVIDENCE]
+HQ-RTR1# show ip ospf interface GigabitEthernet0/2
+GigabitEthernet0/2 is up, line protocol is up
+  Internet Address 172.16.1.1/30, Area 0, Attached via Interface Enable
+  Process ID 1, Router ID 1.1.1.1, Network Type BROADCAST, Cost: 1
+  No Hellos (Passive interface)
+
+HQ-RTR1# show run | section router ospf
+router ospf 1
+ router-id 1.1.1.1
+ passive-interface GigabitEthernet0/2
+ network 172.16.1.0 0.0.0.3 area 0
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Interface GigabitEthernet0/2 is mistakenly configured as a passive-interface under OSPF process 1, suppressing Hello packets.
+================================================================================

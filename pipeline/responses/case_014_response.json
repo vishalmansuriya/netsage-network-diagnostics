@@ -1,0 +1,20 @@
+{
+  "case_id": "CASE-014",
+  "root_cause": "Dynamic NAT pool CORP_POOL range (198.51.100.1-6) includes IP 198.51.100.1, which is the upstream ISP default gateway IP.",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "ip nat pool CORP_POOL 198.51.100.1 198.51.100.6 conflicts with default route pointing to 198.51.100.1.",
+  "next_command": "show ip nat pool",
+  "fix_steps": [
+    "configure terminal",
+    "ip nat pool CORP_POOL 198.51.100.3 198.51.100.6 netmask 255.255.255.248",
+    "end",
+    "clear ip nat translation *"
+  ],
+  "reasoning_summary": "When NAT pool leases the gateway IP, ARP queries from ISP router receive conflicting replies from both the gateway and the NAT router.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Dynamic NAT pool includes IP 198.51.100.1, which conflicts with the upstream ISP default gateway, causing ARP hijack."
+}

@@ -1,0 +1,22 @@
+{
+  "case_id": "CASE-018",
+  "root_cause": "Rogue DHCP server connected to switch port Gi0/8 distributing unauthorized IP leases (192.168.88.0/24) because DHCP Snooping is disabled.",
+  "osi_layer": 7,
+  "confidence": "high",
+  "evidence": "Client ipconfig shows Default Gateway 192.168.88.1 and DHCP Server 192.168.88.1; 'show ip dhcp snooping' shows Switch DHCP snooping is disabled.",
+  "next_command": "show mac address-table dynamic interface Gi0/8",
+  "fix_steps": [
+    "configure terminal",
+    "ip dhcp snooping",
+    "ip dhcp snooping vlan 10",
+    "interface GigabitEthernet0/8",
+    "shutdown",
+    "end"
+  ],
+  "reasoning_summary": "Unmanaged Wi-Fi router answered DHCP discoveries faster than the corporate server. Enabling DHCP snooping treats edge ports as untrusted.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "CLEAN",
+  "rule_checker_violation": "All deterministic rules passed."
+}

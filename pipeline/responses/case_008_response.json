@@ -1,0 +1,20 @@
+{
+  "case_id": "CASE-008",
+  "root_cause": "Missing default static route (0.0.0.0/0) to ISP Gateway 203.0.113.1 on Branch-RTR; Gateway of last resort is not set.",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "Branch-RTR# show ip route shows 'Gateway of last resort is not set' and ping to 8.8.8.8 fails with 0% success.",
+  "next_command": "show ip route 0.0.0.0",
+  "fix_steps": [
+    "configure terminal",
+    "ip route 0.0.0.0 0.0.0.0 203.0.113.1",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Without a default candidate route or IGP advertisement from the upstream ISP, non-local destination traffic is dropped by the router.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Missing default route (0.0.0.0/0) to the ISP gateway. 'Gateway of last resort is not set' in the routing table."
+}

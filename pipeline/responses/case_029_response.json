@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-029",
+  "root_cause": "Port Security violation on Gi0/7: maximum MAC address limit of 1 was exceeded when a second device connected, placing the port in err-disabled shutdown.",
+  "osi_layer": 2,
+  "confidence": "high",
+  "evidence": "show port-security interface Gi0/7: 'Port Status: Secure-shutdown', 'Violation Mode: Shutdown', 'Security Violation Count: 1'; interface status is 'err-disabled'.",
+  "next_command": "show port-security interface GigabitEthernet0/7",
+  "fix_steps": [
+    "configure terminal",
+    "interface GigabitEthernet0/7",
+    "shutdown",
+    "no shutdown",
+    "end"
+  ],
+  "reasoning_summary": "Port Security enforces sticky or maximum MAC address thresholds. Connecting an unmanaged hub or second device immediately trips the shutdown violation action.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Port Security violation triggered by MAC 0025.90cd.e412:10 (Violation Count: 1). Port placed in err-disabled shutdown."
+}

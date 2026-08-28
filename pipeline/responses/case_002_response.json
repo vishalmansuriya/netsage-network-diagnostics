@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-002",
+  "root_cause": "Access port Gi0/5 is assigned to VLAN 50, but VLAN 50 does not exist in the switch VLAN database (vlan.dat), marking the port Inactive.",
+  "osi_layer": 2,
+  "confidence": "high",
+  "evidence": "Access Mode VLAN: 50 (Inactive) and 'show vlan brief' lists only VLANs 1, 10, 20, 30 with VLAN 50 absent.",
+  "next_command": "show vlan brief",
+  "fix_steps": [
+    "configure terminal",
+    "vlan 50",
+    "name Engineering",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "When a port is assigned to a non-existent VLAN, Cisco IOS marks the port Inactive and disables data plane packet forwarding.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Access port assigned to VLAN 50, but VLAN 50 does not exist in the switch VLAN database (vlan.dat), marking port Inactive."
+}

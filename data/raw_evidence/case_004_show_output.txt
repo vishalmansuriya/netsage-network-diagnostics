@@ -1,0 +1,33 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-004
+Concept Tag   : Wireless/L2
+OSI Layer     : Layer 2
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Port Gi0/12 on Acc-SW3 configured with Spanning Tree PortFast and BPDU Guard enabled for edge end-host access.
+
+[SYMPTOM DESCRIPTION]
+Finance PC connected to Access Switch port Gi0/12 suddenly lost all network connectivity. Interface indicator is amber.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Acc-SW3# show interfaces GigabitEthernet0/12 status
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/12    Finance_PC_12      err-disabled 10           auto   auto 10/100/1000BaseTX
+
+Acc-SW3# show log | include %SPANTREE-2-BLOCK_BPDUGUARD
+%SPANTREE-2-BLOCK_BPDUGUARD: Received BPDU on port Gi0/12 with BPDU Guard enabled. Disabling port.
+%PM-4-ERR_DISABLE: bpduguard error detected on Gi0/12, putting Gi0/12 in err-disable state
+
+Acc-SW3# show run interface Gi0/12
+interface GigabitEthernet0/12
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Port Gi0/12 was placed into err-disabled state by STP BPDU Guard after receiving unauthorized BPDU packets from an unmanaged switch.
+================================================================================

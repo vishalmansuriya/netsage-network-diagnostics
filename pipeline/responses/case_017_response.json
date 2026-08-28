@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-017",
+  "root_cause": "DHCP address pool GUEST_WIFI is 100% full (51/51 leases allocated), rejecting new guest client lease requests.",
+  "osi_layer": 7,
+  "confidence": "high",
+  "evidence": "Pool GUEST_WIFI: 'Utilization mark (high/low): 100 / 0', Total addresses: 51, Leased addresses: 51, and syslog '%DHCPD-4-DECLINE: Address pool GUEST_WIFI is full'.",
+  "next_command": "show ip dhcp pool GUEST_WIFI",
+  "fix_steps": [
+    "configure terminal",
+    "ip dhcp pool GUEST_WIFI",
+    "lease 0 2 0",
+    "end",
+    "clear ip dhcp binding *"
+  ],
+  "reasoning_summary": "High guest turnaround exhausted the 51-address scope. Reducing DHCP lease time or expanding the subnet will free up addresses.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "DHCP address pool 'GUEST_WIFI' is 100% full with 0 remaining leases, rejecting new client DHCP requests."
+}

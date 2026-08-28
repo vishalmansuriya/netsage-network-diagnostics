@@ -1,0 +1,22 @@
+{
+  "case_id": "CASE-028",
+  "root_cause": "Duplex mismatch on switch port Gi0/3: Switch auto-negotiated to Half-Duplex against hardcoded Full-Duplex server NIC, causing late collisions.",
+  "osi_layer": 1,
+  "confidence": "high",
+  "evidence": "show interfaces Gi0/3 shows 'Half-duplex, 100Mb/s', '49102 input errors, 48920 CRC', and '38192 late collision'.",
+  "next_command": "show interfaces GigabitEthernet0/3",
+  "fix_steps": [
+    "configure terminal",
+    "interface GigabitEthernet0/3",
+    "speed 100",
+    "duplex full",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "When one side is forced to full-duplex and the other uses auto-negotiation, IEEE 802.3 defaults the auto side to half-duplex, causing collisions during simultaneous transmit.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Duplex mismatch detected: Interface is operating in Half-duplex with 38192 late collisions and 48920 CRC errors."
+}

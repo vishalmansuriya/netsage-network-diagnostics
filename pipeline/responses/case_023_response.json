@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-023",
+  "root_cause": "ACL SEC_FILTER on WAN interface Gi0/0 permits TCP port 53 ('eq domain') but omits UDP port 53, blocking standard DNS queries.",
+  "osi_layer": 4,
+  "confidence": "high",
+  "evidence": "show access-lists SEC_FILTER has '30 permit tcp 192.168.1.0 0.0.0.255 any eq domain' followed by '40 deny ip any any (532 matches)'; UDP 53 is missing.",
+  "next_command": "show access-lists SEC_FILTER",
+  "fix_steps": [
+    "configure terminal",
+    "ip access-list extended SEC_FILTER",
+    "35 permit udp 192.168.1.0 0.0.0.255 any eq domain",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Standard DNS client queries utilize UDP port 53. Because only TCP port 53 was permitted, standard queries hit the implicit deny.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "ACL SEC_FILTER only permits TCP port 53 ('permit tcp ... eq domain') but omits UDP port 53. Standard DNS queries operate over UDP and are blocked by the implicit deny."
+}

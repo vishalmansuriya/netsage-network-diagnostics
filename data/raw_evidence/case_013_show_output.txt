@@ -1,0 +1,35 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-013
+Concept Tag   : NAT
+OSI Layer     : Layer 3
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Branch router NAT overload configured with access-list 10 permitting internal traffic for translation out Gi0/1.
+
+[SYMPTOM DESCRIPTION]
+Branch office PCs in subnet 192.168.20.0/24 cannot reach the Internet; NAT stats show 0 translation matches.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Branch-RTR# show run | include ip nat
+ip nat inside source list 10 interface GigabitEthernet0/1 overload
+
+Branch-RTR# show access-lists 10
+Standard IP access list 10
+    10 permit 192.168.10.0, wildcard bits 0.0.0.255 (0 matches)
+
+Branch-RTR# show ip interface GigabitEthernet0/0
+GigabitEthernet0/0 is up, line protocol is up
+  Internet address is 192.168.20.1/24
+
+Branch-RTR# show ip nat statistics
+Total active translations: 0 (0 static, 0 dynamic; 0 extended)
+Outside interfaces: GigabitEthernet0/1
+Inside interfaces: GigabitEthernet0/0
+Hits: 0  Misses: 142
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+NAT ACL 10 permits 192.168.10.0/24 instead of the actual local LAN subnet 192.168.20.0/24, causing all client packets to miss the NAT rule.
+================================================================================

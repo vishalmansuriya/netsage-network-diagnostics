@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-022",
+  "root_cause": "Inbound ACL INBOUND_FILTER on WAN interface Gi0/1 lacks 'permit tcp any any established', dropping return SYN-ACK web traffic.",
+  "osi_layer": 4,
+  "confidence": "high",
+  "evidence": "show access-lists INBOUND_FILTER shows '30 deny ip any any (18934 matches)' with no TCP established permit rule.",
+  "next_command": "show access-lists INBOUND_FILTER",
+  "fix_steps": [
+    "configure terminal",
+    "ip access-list extended INBOUND_FILTER",
+    "15 permit tcp any any established",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Stateful return traffic for outbound TCP sessions requires either stateful inspection (CBAC/Zone-Based Firewall) or an explicit 'established' permit in stateless ACLs.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Inbound ACL is missing 'permit tcp any any established', causing 18934 drop matches on return SYN-ACK web traffic."
+}

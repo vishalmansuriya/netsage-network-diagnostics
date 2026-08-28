@@ -1,0 +1,35 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-001
+Concept Tag   : VLAN
+OSI Layer     : Layer 2
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Dist-SW1 (Gi0/1, Native VLAN 10) connected to Dist-SW2 (Gi0/1, Native VLAN 20) via 802.1Q trunk. VLAN 10 is Sales (192.168.10.0/24) and VLAN 20 is HR (192.168.20.0/24).
+
+[SYMPTOM DESCRIPTION]
+Broadcast traffic leaking and CDP error logs between Distribution Switch A and Switch B across trunk link Gi0/1.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Dist-SW1# show interfaces trunk
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/1       on               802.1q         trunking      10
+
+Port        Vlans allowed on trunk
+Gi0/1       1-4094
+
+Port        Vlans allowed and active in management domain
+Gi0/1       1,10,20,30
+
+Dist-SW1# show log | include %CDP-4-NATIVE_VLAN_MISMATCH
+%CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on GigabitEthernet0/1 (10), with Dist-SW2 GigabitEthernet0/1 (20).
+
+Dist-SW2# show interfaces trunk
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/1       on               802.1q         trunking      20
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Native VLAN mismatch on 802.1Q trunk link Gi0/1 (Dist-SW1 has native VLAN 10, Dist-SW2 has native VLAN 20).
+================================================================================

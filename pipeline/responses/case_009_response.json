@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-009",
+  "root_cause": "Core link GigabitEthernet0/2 is configured as a passive-interface under OSPF process 1, suppressing Hello transmissions.",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "show ip ospf interface Gi0/2 shows 'No Hellos (Passive interface)' and running-config contains 'passive-interface GigabitEthernet0/2'.",
+  "next_command": "show ip ospf interface GigabitEthernet0/2",
+  "fix_steps": [
+    "configure terminal",
+    "router ospf 1",
+    "no passive-interface GigabitEthernet0/2",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "OSPF passive-interface prevents Hellos from being sent or processed on transit interfaces, preventing neighbor discovery.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "OSPF passive-interface configured on link GigabitEthernet0/2, suppressing Hello packets and preventing adjacency formation."
+}

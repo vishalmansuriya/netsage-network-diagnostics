@@ -1,0 +1,32 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-016
+Concept Tag   : DHCP
+OSI Layer     : Layer 7
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Clients reside in VLAN 20 (192.168.20.0/24). Central DHCP Server is located in Management VLAN 10 at 10.1.1.50.
+
+[SYMPTOM DESCRIPTION]
+Workstations on Sales VLAN 20 are unable to obtain IP addresses and fall back to APIPA (169.254.x.x).
+
+[RAW CISCO IOS CLI EVIDENCE]
+Core-SW1# show run interface Vlan20
+interface Vlan20
+ description Sales_Department
+ ip address 192.168.20.1 255.255.255.0
+ no ip redirects
+
+Core-SW1# show run interface Vlan10
+interface Vlan10
+ description Management_Servers
+ ip address 10.1.1.1 255.255.255.0
+
+Client-PC# ipconfig /renew
+An error occurred while renewing interface Ethernet0 : unable to contact your DHCP server.
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Missing 'ip helper-address 10.1.1.50' under interface Vlan20 on Core-SW1 to forward client DHCP broadcast discovers to the central DHCP server.
+================================================================================

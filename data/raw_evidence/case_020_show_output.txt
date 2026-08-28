@@ -1,0 +1,28 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-020
+Concept Tag   : DHCP
+OSI Layer     : Layer 7
+Severity      : Low
+================================================================================
+
+[TOPOLOGY CONTEXT]
+VLAN 50 Subnet 10.50.0.0/24. Router Gateway is 10.50.0.254.
+
+[SYMPTOM DESCRIPTION]
+Default gateway 10.50.0.254 becomes unresponsive periodically; host ARP table points to a random workstation MAC address.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Core-SW# show run | section ip dhcp
+ip dhcp excluded-address 10.50.0.1 10.50.0.50
+ip dhcp pool VLAN50_POOL
+ network 10.50.0.0 255.255.255.0
+ default-router 10.50.0.254
+ dns-server 10.50.0.10
+
+Core-SW# show ip dhcp binding | include 10.50.0.254
+10.50.0.254         01cc.4477.8899.aa       Feb 28 2026 09:30 AM    Automatic
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Default gateway IP 10.50.0.254 was omitted from 'ip dhcp excluded-address' (which only excluded .1-.50), causing DHCP pool to lease the gateway IP to a host.
+================================================================================

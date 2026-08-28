@@ -1,0 +1,17 @@
+{
+  "case_id": "CASE-005",
+  "root_cause": "Subnet mask mismatch on server SRV-01: configured with /28 (255.255.255.240) isolating it from router gateway 192.168.10.1.",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "SRV-01 Subnet Mask: 255.255.255.240 vs Router Gi0/0 'Internet address is 192.168.10.1/24'. Subnet /28 valid range is .48 to .63.",
+  "next_command": "ping 192.168.10.1",
+  "fix_steps": [
+    "netsh interface ipv4 set address name=\"Local Area Connection\" static 192.168.10.50 255.255.255.0 192.168.10.1"
+  ],
+  "reasoning_summary": "With a /28 mask, 192.168.10.50 calculates its local broadcast domain as 192.168.10.48-63 and treats gateway 192.168.10.1 as remote, failing ARP resolution.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Subnet mask mismatch: Host has 192.168.10.50/255.255.255.240 (Subnet: 192.168.10.48/28) while Gateway is 192.168.10.1/24 (Subnet: 192.168.10.0/24). Gateway is outside host's local subnet."
+}

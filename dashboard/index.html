@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetSage AI — AI-Assisted Network Troubleshooting for Cisco Labs</title>
+    <meta name="description" content="Applied AI and Network Troubleshooting Platform with Human-in-the-Loop Governance for Cisco Enterprise Architectures" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+    <!-- ════════ NAV ════════ -->
+    <nav class="nav-bar sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <span class="font-mono text-sm font-semibold tracking-tight" style="color:var(--fg)">NetSage <span style="color:var(--blue)">AI</span></span>
+                
+                <!-- Navigation Tabs -->
+                <div class="hidden md:flex items-center gap-1">
+                    <button class="nav-tab-btn active" data-target="tab-overview">Overview</button>
+                    <button class="nav-tab-btn" data-target="tab-explorer">Cases (32)</button>
+                    <button class="nav-tab-btn" data-target="tab-rai">Responsible AI</button>
+                    <button class="nav-tab-btn" data-target="tab-how-it-works">How It Works</button>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <span class="hidden sm:inline-block font-mono text-xs px-2.5 py-1 rounded" style="background:var(--surface-2); border:1px solid var(--border); color:var(--green)">● HITL Active</span>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">light</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav Bar -->
+    <div class="md:hidden flex items-center justify-around py-2 border-b" style="background:var(--surface); border-color:var(--border)">
+        <button class="nav-tab-btn active text-xs py-1 px-2.5" data-target="tab-overview">Overview</button>
+        <button class="nav-tab-btn text-xs py-1 px-2.5" data-target="tab-explorer">Cases</button>
+        <button class="nav-tab-btn text-xs py-1 px-2.5" data-target="tab-rai">RAI Log</button>
+        <button class="nav-tab-btn text-xs py-1 px-2.5" data-target="tab-how-it-works">Architecture</button>
+    </div>
+
+    <main>
+
+        <!-- ════════ TAB 1: OVERVIEW ════════ -->
+        <section id="tab-overview" class="tab-content-pane active">
+            
+            <!-- Hero Section with Interactive Terminal -->
+            <div class="max-w-6xl mx-auto px-5 sm:px-8 py-12 md:py-16">
+                <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
+
+                    <!-- Left Copy -->
+                    <div class="lg:w-[42%] flex-shrink-0">
+                        <p class="sec-label mb-2">Cisco Internship Project 2</p>
+                        <h1 class="font-mono font-bold text-[1.65rem] sm:text-[2rem] lg:text-[2.25rem] leading-[1.3] mb-5" style="color:var(--fg)">
+                            Your show commands<br>have the clues.<br>NetSage reads them.
+                        </h1>
+                        <p class="text-[14.5px] sm:text-base leading-relaxed mb-6" style="color:var(--fg-muted)">
+                            AI-assisted network diagnostic platform for Cisco environments.
+                            Combines <strong style="color:var(--fg)">deterministic rule checking</strong> with <strong style="color:var(--fg)">evidence-grounded LLM inference</strong>, governed by mandatory <strong style="color:var(--fg)">Human-in-the-Loop review</strong>.
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <button class="cta-link cursor-pointer" onclick="document.querySelector('[data-target=\'tab-explorer\']').click()">Explore 32 Cases →</button>
+                            <span style="color:var(--border)">|</span>
+                            <a href="#how-it-works-sec" class="cta-link" onclick="document.querySelector('[data-target=\'tab-how-it-works\']').click()">Architecture →</a>
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Terminal -->
+                    <div class="lg:w-[58%] w-full">
+                        <div class="terminal">
+                            <div class="terminal-bar">
+                                <div class="terminal-bar-dot" style="background:#FF5F57"></div>
+                                <div class="terminal-bar-dot" style="background:#FEBC2E"></div>
+                                <div class="terminal-bar-dot" style="background:#28C840"></div>
+                                <span class="font-mono text-xs ml-3" style="color:#8B949E">netsage-diag — live trace</span>
+                            </div>
+                            <div class="terminal-body" id="terminal-body" aria-live="polite" aria-label="Live diagnostic trace demo">
+                                <noscript><div style="color:var(--amber)">Enable JavaScript to run the diagnostic trace.</div></noscript>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <hr class="sep max-w-6xl mx-auto">
+
+            <!-- KPIs Section -->
+            <div class="max-w-6xl mx-auto px-5 sm:px-8 py-12 md:py-16">
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <p class="sec-label">System Performance Metrics</p>
+                        <h2 class="sec-title text-lg sm:text-xl">Human-in-the-Loop & Rule Engine Telemetry</h2>
+                    </div>
+                    <span class="font-mono text-xs" style="color:var(--fg-muted)">32 Benchmark Incidents</span>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
+                    <div class="kpi-card col-span-2 sm:col-span-1">
+                        <div class="kpi-label">Total Cases</div>
+                        <div class="kpi-value" id="kpi-total">32</div>
+                        <div class="kpi-sub">L1 – L7 Coverage</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-label" style="color:var(--green)">AI Accepted</div>
+                        <div class="kpi-value" id="kpi-accepted" style="color:var(--green)">71.9%</div>
+                        <div class="kpi-sub">23 Cases Verified</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-label" style="color:var(--amber)">Human Edited</div>
+                        <div class="kpi-value" id="kpi-edited" style="color:var(--amber)">15.6%</div>
+                        <div class="kpi-sub">5 Command Fixes</div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-label" style="color:var(--red)">AI Rejected</div>
+                        <div class="kpi-value" id="kpi-rejected" style="color:var(--red)">12.5%</div>
+                        <div class="kpi-sub">4 Hallucinations</div>
+                    </div>
+
+                    <div class="kpi-card col-span-2 sm:col-span-1">
+                        <div class="kpi-label" style="color:var(--blue)">Rule Checker</div>
+                        <div class="kpi-value" id="kpi-rules" style="color:var(--blue)">90.6%</div>
+                        <div class="kpi-sub">Deterministic Hit</div>
+                    </div>
+                </div>
+
+                <!-- Visual Charts -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="chart-box">
+                        <div class="chart-box-header">
+                            <span class="chart-title">Human Review Verdicts</span>
+                            <span class="chart-badge">HITL Governance</span>
+                        </div>
+                        <div style="height:220px; position:relative;">
+                            <canvas id="chart-verdicts"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-box">
+                        <div class="chart-box-header">
+                            <span class="chart-title">Case Distribution by Concept Tag</span>
+                            <span class="chart-badge">7 Domains</span>
+                        </div>
+                        <div style="height:220px; position:relative;">
+                            <canvas id="chart-tags"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-box">
+                        <div class="chart-box-header">
+                            <span class="chart-title">Severity & OSI Layer Distribution</span>
+                            <span class="chart-badge">L1 – L7 Breakdown</span>
+                        </div>
+                        <div style="height:220px; position:relative;">
+                            <canvas id="chart-layers"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-box">
+                        <div class="chart-box-header">
+                            <span class="chart-title">AI Failures / Corrections by Domain</span>
+                            <span class="chart-badge">Weakness Discovery</span>
+                        </div>
+                        <div style="height:220px; position:relative;">
+                            <canvas id="chart-failures"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ════════ TAB 2: CASE EXPLORER ════════ -->
+        <section id="tab-explorer" class="tab-content-pane">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8 py-12">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <p class="sec-label">Interactive Case Database</p>
+                        <h2 class="sec-title text-lg sm:text-xl">32 Cisco Troubleshooting Incidents</h2>
+                    </div>
+                    
+                    <!-- Search & Filter Controls -->
+                    <div class="flex flex-wrap items-center gap-3">
+                        <input id="filter-search" type="text" class="search-input max-w-xs" placeholder="Search symptom, ID, fault..." />
+                        
+                        <select id="filter-tag" class="select-filter">
+                            <option value="ALL">All Domains</option>
+                            <option value="VLAN">VLAN</option>
+                            <option value="Routing">Routing</option>
+                            <option value="NAT">NAT</option>
+                            <option value="DHCP">DHCP</option>
+                            <option value="ACL">ACL</option>
+                            <option value="DNS">DNS</option>
+                            <option value="Wireless/L2">Wireless / L2</option>
+                        </select>
+
+                        <select id="filter-verdict" class="select-filter">
+                            <option value="ALL">All Verdicts</option>
+                            <option value="Accepted">Accepted Only</option>
+                            <option value="Edited">Edited Only</option>
+                            <option value="Rejected">Rejected Only</option>
+                        </select>
+
+                        <select id="filter-severity" class="select-filter">
+                            <option value="ALL">All Severities</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Table Container -->
+                <div class="case-table-wrap">
+                    <table class="case-table">
+                        <thead>
+                            <tr>
+                                <th>Case ID</th>
+                                <th>Domain</th>
+                                <th>OSI</th>
+                                <th>Severity</th>
+                                <th>Symptom</th>
+                                <th>Rule Status</th>
+                                <th>AI Conf.</th>
+                                <th>Human Verdict</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cases-tbody">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════ TAB 3: RESPONSIBLE AI ════════ -->
+        <section id="tab-rai" class="tab-content-pane">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8 py-12">
+                <div class="mb-8">
+                    <p class="sec-label">Responsible AI & Governance</p>
+                    <h2 class="sec-title text-xl sm:text-2xl mb-3">Failure Case Post-Mortems & Guardrails</h2>
+                    <p class="text-[14.5px] max-w-3xl" style="color:var(--fg-muted)">
+                        Every failure case in NetSage AI was captured during human review, analyzed for hallucination causes, and mitigated through prompt refinements and deterministic rule checkers.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="rai-container">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════ TAB 4: HOW IT WORKS / ARCHITECTURE ════════ -->
+        <section id="tab-how-it-works" class="tab-content-pane">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8 py-12" id="how-it-works-sec">
+                <p class="sec-label">Architecture & Execution Workflow</p>
+                <h2 class="sec-title text-xl sm:text-2xl mb-10">Symptom, Rule Check, AI Diagnosis, Human Review, Fix</h2>
+
+                <div class="max-w-3xl">
+                    <!-- Step 1 -->
+                    <div class="flow-step">
+                        <span class="flow-num">[1]</span>
+                        <p class="flow-title">Deterministic Pre-Check (Independent Ground Truth)</p>
+                        <p class="flow-body">
+                            Before invoking any AI, 8 modular deterministic rule checkers evaluate IP conflicts, subnet boundaries, gateway reachability, err-disabled interfaces, and routing table entries.
+                        </p>
+                        <div class="flow-example">> python checker/rule_checker.py --all
+[PASS] Evaluated 32 cases | 29 violations flagged (90.6% detection)</div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flow-step">
+                        <span class="flow-num">[2]</span>
+                        <p class="flow-title">Evidence-Grounded AI Inference</p>
+                        <p class="flow-body">
+                            The prompt enforces strict JSON schema and mandates exact quotation of Cisco CLI parameters in the <span class="im">evidence</span> field. Confidence is penalized if citations are omitted.
+                        </p>
+                        <div class="flow-example">{
+  "root_cause": "OSPF interface MTU mismatch on link Gi0/0",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "R1 MTU is 1500 bytes vs R2 MTU is 1400 bytes",
+  "next_command": "show ip ospf neighbor GigabitEthernet0/0"
+}</div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flow-step">
+                        <span class="flow-num">[3]</span>
+                        <p class="flow-title">Mandatory Human-in-the-Loop Review</p>
+                        <p class="flow-body">
+                            Every single diagnosis must be verified by a human network engineer. Reviewers record Accepted, Edited, or Rejected verdicts with technical rationale in <span class="im">review_log.csv</span>.
+                        </p>
+                        <div class="flow-example">▶ HUMAN REVIEW VERDICT:
+  CASE-007: [REJECTED] - AI hallucinated MD5 key error, actual MTU mismatch.
+  CASE-012: [REJECTED] - AI blamed ACL, actual NAT inside/outside inverted.</div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flow-step">
+                        <span class="flow-num">[4]</span>
+                        <p class="flow-title">Continuous Feedback & Safeguards</p>
+                        <p class="flow-body">
+                            Rejections and edits drive new deterministic rule plugins and prompt changelogs (v1.0 → v1.1 → v2.0) to prevent repeated hallucinations in production.
+                        </p>
+                    </div>
+                </div>
+
+                <hr class="sep my-12">
+
+                <!-- Diagnostic Coverage -->
+                <div>
+                    <p class="sec-label">Coverage Matrix</p>
+                    <h2 class="sec-title text-xl mb-6">Fault Types Across OSI Layers 1 – 7</h2>
+
+                    <div class="terminal" style="max-width:580px">
+                        <div class="terminal-bar">
+                            <div class="terminal-bar-dot" style="background:#FF5F57"></div>
+                            <div class="terminal-bar-dot" style="background:#FEBC2E"></div>
+                            <div class="terminal-bar-dot" style="background:#28C840"></div>
+                            <span class="font-mono text-xs ml-3" style="color:#8B949E">netsage-diag — bash</span>
+                        </div>
+                        <div class="terminal-body" style="min-height:auto;max-height:none;padding:18px 20px">
+                            <div class="cov-table">
+                                <div class="t-cmd">> show diagnostic-coverage</div>
+                                <div style="height:8px"></div>
+                                <div class="cov-header"><span style="display:inline-block;width:140px">fault-type</span><span style="display:inline-block;width:90px">status</span><span>osi-layers</span></div>
+                                <div><span class="cov-name" style="display:inline-block;width:140px">VLAN</span><span class="cov-dot" style="display:inline-block;width:90px">● active</span><span class="cov-layers">2</span></div>
+                                <div><span class="cov-name" style="display:inline-block;width:140px">DHCP</span><span class="cov-dot" style="display:inline-block;width:90px">● active</span><span class="cov-layers">3, 7</span></div>
+                                <div><span class="cov-name" style="display:inline-block;width:140px">DNS</span><span class="cov-dot" style="display:inline-block;width:90px">● active</span><span class="cov-layers">7</span></div>
+                                <div><span class="cov-name" style="display:inline-block;width:140px">Routing</span><span class="cov-dot" style="display:inline-block;width:90px">● active</span><span class="cov-layers">3</span></div>
+                                <div><span class="cov-name" style="display:inline-block;width:140px">ACL</span><span class="cov-dot" style="display:inline-block;width:90px">● active</span><span class="cov-layers">3, 4</span></div>
+                                <div><span class="cov-name" style="display:inline-block;width:140px">NAT</span><span class="cov-dot" style="display:inline-block;width:90px">● active</span><span class="cov-layers">3, 4</span></div>
+                                <div><span class="cov-name" style="display:inline-block;width:140px">Wireless/L2</span><span class="cov-dot" style="display:inline-block;width:90px">● active</span><span class="cov-layers">1, 2, 4</span></div>
+                                <div style="height:8px"></div>
+                                <div class="t-label">Full diagnostic coverage: 32 benchmark cases</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ════════ FOOTER ════════ -->
+    <footer style="border-top:1px solid var(--border); transition:border-color 0.25s">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <span class="font-mono text-sm" style="color:var(--fg-muted)">NetSage AI — Applied AI + Network Troubleshooting</span>
+            <span class="font-mono text-xs" style="color:var(--fg-muted)">Cisco Internship Project 2 • Sanjay</span>
+        </div>
+    </footer>
+
+    <!-- ════════ 4-WAY CASE DIFF MODAL ════════ -->
+    <div id="case-modal" class="modal-backdrop hidden">
+        <div class="modal-window">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="flex items-center gap-3">
+                        <span class="font-mono text-xs px-2 py-0.5 rounded font-bold" style="background:var(--blue); color:#000" id="modal-case-id">CASE-001</span>
+                        <h2 class="font-mono text-base font-bold" style="color:var(--fg)" id="modal-title">Case Symptom</h2>
+                    </div>
+                    <div class="flex items-center gap-2 mt-2">
+                        <span class="tag-badge" id="modal-tag">VLAN</span>
+                        <span class="tag-badge" id="modal-layer">Layer 2</span>
+                        <span class="tag-badge" id="modal-severity">High</span>
+                        <span class="verdict-tag" id="modal-verdict">Accepted</span>
+                    </div>
+                </div>
+                <button id="modal-close" class="font-mono text-xs px-2.5 py-1 rounded cursor-pointer" style="background:var(--surface-2); border:1px solid var(--border); color:var(--fg-muted)">✕ close</button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
+                <!-- Panel 1: Raw Evidence -->
+                <div class="p-4 rounded border" style="background:var(--surface-2); border-color:var(--border)">
+                    <div class="font-mono text-xs font-semibold mb-2" style="color:var(--blue)">[1] Raw Cisco IOS Show Command Evidence</div>
+                    <pre id="modal-evidence-text" class="font-mono text-[11.5px] p-3 rounded overflow-x-auto whitespace-pre-wrap max-h-56" style="background:#090D12; color:#93C5FD"></pre>
+                </div>
+
+                <!-- Panel 2: Rule Checker & Ground Truth -->
+                <div class="p-4 rounded border" style="background:var(--surface-2); border-color:var(--border)">
+                    <div class="font-mono text-xs font-semibold mb-2" style="color:var(--amber)">[2] Deterministic Rule Engine Finding</div>
+                    <div id="modal-rule-finding" class="font-mono text-xs p-3 rounded mb-3" style="background:#090D12; color:var(--fg)"></div>
+
+                    <div class="font-mono text-xs font-semibold mb-2" style="color:var(--green)">[Ground Truth Technical Fault]</div>
+                    <div id="modal-ground-truth" class="font-mono text-xs p-3 rounded" style="background:#090D12; color:var(--green); border-left:3px solid var(--green)"></div>
+                </div>
+
+                <!-- Panel 3: AI Diagnosis -->
+                <div class="p-4 rounded border" style="background:var(--surface-2); border-color:var(--border)">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-mono text-xs font-semibold" style="color:var(--blue)">[3] AI Diagnostic Recommendation</span>
+                        <span class="font-mono text-[11px]" style="color:var(--fg-muted)">Confidence: <strong id="modal-ai-conf" style="color:var(--green)">HIGH</strong></span>
+                    </div>
+                    <div id="modal-ai-cause" class="font-mono text-xs p-3 rounded mb-2" style="background:#090D12; color:var(--fg)"></div>
+                    
+                    <div class="font-mono text-[11px] mb-1" style="color:var(--fg-muted)">Evidence Quoted:</div>
+                    <div id="modal-ai-evidence" class="font-mono text-[11px] p-2 rounded mb-2" style="background:#090D12; color:var(--blue); border:1px dashed var(--border)"></div>
+
+                    <div class="font-mono text-[11px] mb-1" style="color:var(--fg-muted)">Remediation Steps:</div>
+                    <ul id="modal-ai-fix" class="font-mono text-[11px] list-decimal list-inside p-2 rounded" style="background:#090D12; color:#38BDF8"></ul>
+                </div>
+
+                <!-- Panel 4: Human Review Decision -->
+                <div class="p-4 rounded border" style="background:var(--surface-2); border-color:var(--border)">
+                    <div class="font-mono text-xs font-semibold mb-2" style="color:var(--green)">[4] Human-in-the-Loop Audit Decision</div>
+                    <div id="modal-verdict-banner" class="font-mono text-xs font-bold p-2.5 rounded mb-3"></div>
+
+                    <div class="font-mono text-[11px] mb-1" style="color:var(--fg-muted)">Reviewer Notes:</div>
+                    <div id="modal-reviewer-notes" class="font-mono text-xs p-3 rounded mb-3" style="background:#090D12; color:var(--fg)"></div>
+
+                    <div class="font-mono text-[11px] mb-1" style="color:var(--fg-muted)">Human Edits / Corrections:</div>
+                    <div id="modal-human-edits" class="font-mono text-xs p-3 rounded" style="background:#090D12; color:var(--amber); border-left:3px solid var(--amber)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════ SCRIPT ════════ -->
+    <script src="app.js"></script>
+</body>
+</html>

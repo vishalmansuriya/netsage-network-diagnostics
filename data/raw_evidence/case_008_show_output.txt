@@ -1,0 +1,37 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-008
+Concept Tag   : Routing
+OSI Layer     : Layer 3
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Branch-RTR Gi0/1 (192.168.1.1/24 LAN) and Gi0/0 (203.0.113.2/30 WAN) connects to ISP Gateway 203.0.113.1.
+
+[SYMPTOM DESCRIPTION]
+Branch office users can ping local servers but cannot access any public Internet websites (e.g. 8.8.8.8).
+
+[RAW CISCO IOS CLI EVIDENCE]
+Branch-RTR# show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+
+Gateway of last resort is not set
+
+      192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.1.0/24 is directly connected, GigabitEthernet0/1
+L        192.168.1.1/32 is directly connected, GigabitEthernet0/1
+      203.0.113.0/30 is variably subnetted, 2 subnets, 2 masks
+C        203.0.113.0/30 is directly connected, GigabitEthernet0/0
+L        203.0.113.2/32 is directly connected, GigabitEthernet0/0
+
+Branch-RTR# ping 8.8.8.8
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 8.8.8.8, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Missing default route (0.0.0.0/0) pointing to ISP Gateway 203.0.113.1 on Branch-RTR; Gateway of last resort is not set.
+================================================================================

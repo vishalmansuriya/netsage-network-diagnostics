@@ -1,0 +1,30 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-006
+Concept Tag   : Routing
+OSI Layer     : Layer 3
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+DB-01 resides on VLAN 20 (10.10.20.0/24). Core Router SVI Vlan20 is 10.10.20.1/24 and Vlan30 is 10.10.30.1/24.
+
+[SYMPTOM DESCRIPTION]
+Database Server DB-01 cannot communicate with external API endpoints or other subnets.
+
+[RAW CISCO IOS CLI EVIDENCE]
+DB-01# ifconfig eth0
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.20.15  netmask 255.255.255.0  broadcast 10.10.20.255
+
+DB-01# ip route show
+default via 10.10.30.1 dev eth0
+10.10.20.0/24 dev eth0 proto kernel scope link src 10.10.20.15
+
+Core-RTR# show ip interface brief | include Vlan
+Vlan20                 10.10.20.1      YES manual up                    up
+Vlan30                 10.10.30.1      YES manual up                    up
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Default gateway mismatch on DB-01: configured with 10.10.30.1 (VLAN 30 gateway) instead of 10.10.20.1 (local subnet gateway).
+================================================================================

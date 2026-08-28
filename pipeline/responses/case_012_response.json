@@ -1,0 +1,25 @@
+{
+  "case_id": "CASE-012",
+  "root_cause": "NAT inside and outside interface directions are inverted (LAN Gi0/0 has 'ip nat outside' and WAN Gi0/1 has 'ip nat inside').",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "interface Gi0/0 (LAN): 'ip nat outside', interface Gi0/1 (WAN): 'ip nat inside'; 'show ip nat translations' is completely empty.",
+  "next_command": "show ip nat statistics",
+  "fix_steps": [
+    "configure terminal",
+    "interface GigabitEthernet0/0",
+    "no ip nat outside",
+    "ip nat inside",
+    "interface GigabitEthernet0/1",
+    "no ip nat inside",
+    "ip nat outside",
+    "end",
+    "clear ip nat translation *"
+  ],
+  "reasoning_summary": "NAT engines translate source addresses from inside-to-outside interfaces. Inverting the tags causes outbound client traffic to be ignored by the translation engine.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "NAT interface direction is inverted: LAN interface is marked as 'ip nat outside' and WAN interface as 'ip nat inside', preventing translations."
+}

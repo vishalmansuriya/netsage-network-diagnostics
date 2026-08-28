@@ -1,0 +1,33 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-015
+Concept Tag   : NAT
+OSI Layer     : Layer 3
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Internal DMZ Server is 192.168.100.10. Public static IP allocated by ISP is 203.0.113.205.
+
+[SYMPTOM DESCRIPTION]
+External customers cannot connect to public DMZ HTTPS server; DNS resolves to 203.0.113.205 but SYN packets are unanswered.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Edge-GW# show run | include ip nat inside source static
+ip nat inside source static 192.168.100.10 203.0.113.250
+
+Edge-GW# show ip nat translations
+Pro Inside global         Inside local          Outside local         Outside global
+--- 203.0.113.250         192.168.100.10        ---                   ---
+
+External-Client# nslookup secure.example.com
+Server:  8.8.8.8
+Address: 8.8.8.8#53
+
+Non-authoritative answer:
+Name:    secure.example.com
+Address: 203.0.113.205
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Static 1-to-1 NAT IP configuration typo: mapped inside server to 203.0.113.250 instead of registered public DNS IP 203.0.113.205.
+================================================================================

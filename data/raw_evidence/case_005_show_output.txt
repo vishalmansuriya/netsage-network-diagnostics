@@ -1,0 +1,31 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-005
+Concept Tag   : Routing
+OSI Layer     : Layer 3
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+LAN Subnet is 192.168.10.0/24. Router Gateway is 192.168.10.1/24. SRV-01 is statically assigned IP 192.168.10.50.
+
+[SYMPTOM DESCRIPTION]
+Production Web Server SRV-01 (192.168.10.50) can reach hosts in its lower IP range but cannot reach the default gateway 192.168.10.1.
+
+[RAW CISCO IOS CLI EVIDENCE]
+SRV-01# ipconfig /all
+Ethernet adapter Local Area Connection:
+   IPv4 Address. . . . . . . . . . . : 192.168.10.50
+   Subnet Mask . . . . . . . . . . . : 255.255.255.240
+   Default Gateway . . . . . . . . . : 192.168.10.1
+
+Core-RTR# show ip interface GigabitEthernet0/0
+GigabitEthernet0/0 is up, line protocol is up
+  Internet address is 192.168.10.1/24
+  Broadcast address is 192.168.10.255
+  Address determined by setup command
+  MTU is 1500 bytes
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Subnet mask mismatch on server SRV-01: configured with /28 (255.255.255.240, valid range 192.168.10.48-63) making gateway 192.168.10.1 appear off-subnet.
+================================================================================

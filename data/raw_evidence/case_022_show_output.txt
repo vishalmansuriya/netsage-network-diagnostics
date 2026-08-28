@@ -1,0 +1,29 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-022
+Concept Tag   : ACL
+OSI Layer     : Layer 4
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Edge Router with inbound ACL applied on WAN interface Gi0/1 facing ISP.
+
+[SYMPTOM DESCRIPTION]
+Internal users can initiate TCP web connections to external web servers, but pages time out and TCP handshake never finishes.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Edge-RTR# show access-lists INBOUND_FILTER
+Extended IP access list INBOUND_FILTER
+    10 permit udp any any eq domain
+    20 permit icmp any any echo-reply
+    30 deny ip any any (18934 matches)
+
+Edge-RTR# show run interface GigabitEthernet0/1
+interface GigabitEthernet0/1
+ ip address 203.0.113.2 255.255.255.252
+ ip access-group INBOUND_FILTER in
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Inbound ACL INBOUND_FILTER on WAN interface Gi0/1 is missing 'permit tcp any any established', blocking return SYN-ACK and ACK web traffic.
+================================================================================

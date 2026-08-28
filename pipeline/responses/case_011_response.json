@@ -1,0 +1,20 @@
+{
+  "case_id": "CASE-011",
+  "root_cause": "Static route next-hop IP 10.254.1.1 is unreachable and has no route in the RIB (recursive routing failure), preventing route installation.",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "ip route 172.20.0.0 255.255.0.0 10.254.1.1 configured, but 'show ip route 10.254.1.1' returns '% Network not in table'.",
+  "next_command": "show ip route 10.254.1.1",
+  "fix_steps": [
+    "configure terminal",
+    "ip route 172.20.0.0 255.255.0.0 10.100.1.2",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Cisco IOS requires the next-hop IP address of a static route to be resolvable via a directly connected subnet or an active route.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Recursive route lookup failure: Static route next-hop 10.254.1.1 is not in the routing table, preventing route activation."
+}

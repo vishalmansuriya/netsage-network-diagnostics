@@ -1,0 +1,29 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-026
+Concept Tag   : DNS
+OSI Layer     : Layer 7
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Branch DNS caching forwarder runs on Branch-GW (192.168.1.1). Corporate internal DNS server is 10.0.0.5.
+
+[SYMPTOM DESCRIPTION]
+Branch office PCs cannot resolve internal intranet URLs (e.g. portal.corp.local) but public websites resolve normally.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Branch-GW# show run | include ip dns
+ip dns server
+ip dns forwarding
+ip name-server 8.8.8.8
+ip name-server 8.8.4.4
+
+Branch-GW# show hosts
+Default domain is corp.local
+Name/address lookup uses domain service
+Name servers are 8.8.8.8, 8.8.4.4
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Split-brain DNS misconfiguration: Branch-GW name-servers are set exclusively to public resolvers (8.8.8.8) with no conditional forwarder for internal zone 'corp.local' to 10.0.0.5.
+================================================================================

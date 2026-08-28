@@ -1,0 +1,34 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-018
+Concept Tag   : DHCP
+OSI Layer     : Layer 7
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Corporate VLAN 10 is 10.10.10.0/24. Access-SW1 connects end-user desks on Gi0/1-24.
+
+[SYMPTOM DESCRIPTION]
+Multiple employee laptops suddenly received default gateway 192.168.88.1 and lost access to corporate intranet resources.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Employee-PC# ipconfig /all
+   IPv4 Address. . . . . . . . . . . : 192.168.88.105
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.88.1
+   DHCP Server . . . . . . . . . . . : 192.168.88.1
+
+Access-SW1# show ip dhcp snooping
+Switch DHCP snooping is disabled
+
+Access-SW1# show mac address-table dynamic interface Gi0/8
+          Mac Address Table
+-------------------------------------------
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+10      00e0.4c68.1122    DYNAMIC     Gi0/8
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Rogue DHCP server connected to switch port Gi0/8 distributing rogue leases (192.168.88.0/24) because DHCP Snooping is disabled.
+================================================================================

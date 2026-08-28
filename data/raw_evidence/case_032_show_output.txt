@@ -1,0 +1,31 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-032
+Concept Tag   : Wireless/L2
+OSI Layer     : Layer 4
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+LAPs at Branch (192.168.50.0/24) connect across WAN to HQ WLC (10.200.1.5). CAPWAP control tunnel requires UDP 5246/5247.
+
+[SYMPTOM DESCRIPTION]
+Cisco Lightweight Access Points (LAPs) in Branch Office cannot register with the Wireless LAN Controller (WLC) at HQ.
+
+[RAW CISCO IOS CLI EVIDENCE]
+HQ-Firewall# show access-lists WAN_INSPECT
+Extended IP access list WAN_INSPECT
+    10 permit tcp any host 10.200.1.5 eq 443
+    20 permit tcp any host 10.200.1.5 eq 22
+    30 deny ip any host 10.200.1.5 (2481 matches)
+
+Branch-AP# show capwap client status
+CAPWAP State: Discovery
+Discovery Request Sent Count: 18
+Discovery Response Received: 0
+WLC IP: 10.200.1.5
+Error: Discovery request to 10.200.1.5 timed out.
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+HQ Firewall ACL WAN_INSPECT blocks CAPWAP control/data tunnel traffic (UDP ports 5246 and 5247) between Branch LAPs and the WLC.
+================================================================================

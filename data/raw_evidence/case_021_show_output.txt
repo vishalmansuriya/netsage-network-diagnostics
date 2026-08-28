@@ -1,0 +1,29 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-021
+Concept Tag   : ACL
+OSI Layer     : Layer 3
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Core Router interfaces Gi0/1 (VLAN 10: 192.168.10.1) and Gi0/3 (VLAN 30: 192.168.30.1).
+
+[SYMPTOM DESCRIPTION]
+Finance department hosts in 192.168.10.0/24 cannot reach internal Accounting SQL server at 192.168.30.50.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Core-RTR# show access-lists 10
+Standard IP access list 10
+    10 deny   192.168.10.0, wildcard bits 0.0.0.255 (450 matches)
+    20 permit any (1200 matches)
+
+Core-RTR# show run interface GigabitEthernet0/3
+interface GigabitEthernet0/3
+ description Accounting VLAN 30 Interface
+ ip address 192.168.30.1 255.255.255.0
+ ip access-group 10 out
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Standard ACL 10 applied outbound on interface Gi0/3 explicitly denies source subnet 192.168.10.0/24 from reaching the Accounting subnet.
+================================================================================

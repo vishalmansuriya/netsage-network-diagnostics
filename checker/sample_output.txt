@@ -1,0 +1,108 @@
+================================================================================
+NETSAGE AI — DETERMINISTIC RULE CHECKER ENGINE REPORT
+================================================================================
+Case ID    | Tag          | Layer  | Verdict  | Primary Deterministic Finding
+--------------------------------------------------------------------------------
+CASE-001   | VLAN         | L2     | FLAGGED  | Native VLAN mismatch on trunk link Gigabit...
+CASE-002   | VLAN         | L2     | FLAGGED  | Access port assigned to VLAN 50, but VLAN ...
+CASE-003   | VLAN         | L2     | FLAGGED  | Required VLAN 40 is missing from trunk all...
+CASE-004   | Wireless/L2  | L2     | FLAGGED  | Interface Gi0/12 entered err-disabled stat...
+CASE-005   | Routing      | L3     | FLAGGED  | Subnet mask mismatch: Host has 192.168.10....
+CASE-006   | Routing      | L3     | FLAGGED  | Default gateway 10.10.30.1 is not in host'...
+CASE-007   | Routing      | L3     | FLAGGED  | OSPF MTU mismatch between neighbors: Local...
+CASE-008   | Routing      | L3     | FLAGGED  | Missing default route (0.0.0.0/0) to the I...
+CASE-009   | Routing      | L3     | FLAGGED  | OSPF passive-interface configured on link ...
+CASE-010   | Routing      | L3     | FLAGGED  | BGP remote-as mismatch: Configured remote-...
+CASE-011   | Routing      | L3     | FLAGGED  | Recursive route lookup failure: Static rou...
+CASE-012   | NAT          | L3     | FLAGGED  | NAT interface direction is inverted: LAN i...
+CASE-013   | NAT          | L3     | FLAGGED  | NAT ACL permits 192.168.10.0 but local LAN...
+CASE-014   | NAT          | L3     | FLAGGED  | Dynamic NAT pool includes IP 198.51.100.1,...
+CASE-015   | NAT          | L3     | FLAGGED  | Static NAT outside IP (203.0.113.250) does...
+CASE-016   | DHCP         | L7     | FLAGGED  | Missing 'ip helper-address' on interface V...
+CASE-017   | DHCP         | L7     | FLAGGED  | DHCP address pool 'GUEST_WIFI' is 100% ful...
+CASE-018   | DHCP         | L7     | CLEAN    | All deterministic rules passed.
+CASE-019   | DHCP         | L3     | FLAGGED  | Duplicate IP address detected: 192.168.1.2...
+CASE-020   | DHCP         | L7     | FLAGGED  | Default gateway IP 10.50.0.254 is leased b...
+CASE-021   | ACL          | L3     | FLAGGED  | Standard ACL explicitly denies traffic fro...
+CASE-022   | ACL          | L4     | FLAGGED  | Inbound ACL is missing 'permit tcp any any...
+CASE-023   | ACL          | L4     | FLAGGED  | ACL SEC_FILTER only permits TCP port 53 ('...
+CASE-024   | ACL          | L3     | FLAGGED  | ACL BLOCK_GUEST was applied outbound on WA...
+CASE-025   | DNS          | L7     | FLAGGED  | Configured DNS / Gateway server 10.10.1.20...
+CASE-026   | DNS          | L7     | CLEAN    | All deterministic rules passed.
+CASE-027   | DNS          | L4     | CLEAN    | All deterministic rules passed.
+CASE-028   | Wireless/L2  | L1     | FLAGGED  | Duplex mismatch detected: Interface is ope...
+CASE-029   | Wireless/L2  | L2     | FLAGGED  | Port Security violation triggered by MAC 0...
+CASE-030   | Wireless/L2  | L2     | FLAGGED  | ARP Poisoning / Gateway MAC spoofing detec...
+CASE-031   | Wireless/L2  | L2     | FLAGGED  | STP Root Guard blocked the downstream port...
+CASE-032   | Wireless/L2  | L4     | FLAGGED  | Firewall ACL WAN_INSPECT blocks CAPWAP con...
+================================================================================
+Summary: 32 Cases Evaluated | 29 Flagged Violations | 3 Clean Passes
+Detection Rate: 90.6%
+================================================================================
+
+================================================================================
+DETAILED RULE TRACE (FIRST 3 CASES)
+================================================================================
+{
+  "case_id": "CASE-001",
+  "verdict": "FLAGGED",
+  "violations_count": 1,
+  "primary_violation": "Native VLAN mismatch on trunk link GigabitEthernet0/1: Local Native VLAN is 10, but remote Dist-SW2 GigabitEthernet0/1 is Native VLAN 20.",
+  "evidence": "%CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on GigabitEthernet0/1 (10), with Dist-SW2 GigabitEthernet0/1 (20)",
+  "all_violations": [
+    {
+      "rule": "NATIVE_VLAN_MISMATCH",
+      "status": "VIOLATION",
+      "severity": "High",
+      "finding": "Native VLAN mismatch on trunk link GigabitEthernet0/1: Local Native VLAN is 10, but remote Dist-SW2 GigabitEthernet0/1 is Native VLAN 20.",
+      "evidence": "%CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on GigabitEthernet0/1 (10), with Dist-SW2 GigabitEthernet0/1 (20)"
+    }
+  ],
+  "rules_evaluated": 8,
+  "expected_fault": "Native VLAN mismatch on 802.1Q trunk link Gi0/1 (Dist-SW1 has native VLAN 10, Dist-SW2 has native VLAN 20).",
+  "concept_tag": "VLAN",
+  "osi_layer": "2"
+}
+
+{
+  "case_id": "CASE-002",
+  "verdict": "FLAGGED",
+  "violations_count": 1,
+  "primary_violation": "Access port assigned to VLAN 50, but VLAN 50 does not exist in the switch VLAN database (vlan.dat), marking port Inactive.",
+  "evidence": "Access Mode VLAN: 50 (Inactive)",
+  "all_violations": [
+    {
+      "rule": "VLAN_NOT_IN_DATABASE",
+      "status": "VIOLATION",
+      "severity": "Medium",
+      "finding": "Access port assigned to VLAN 50, but VLAN 50 does not exist in the switch VLAN database (vlan.dat), marking port Inactive.",
+      "evidence": "Access Mode VLAN: 50 (Inactive)"
+    }
+  ],
+  "rules_evaluated": 8,
+  "expected_fault": "Access port Gi0/5 is assigned to VLAN 50, but VLAN 50 does not exist in the switch VLAN database (vlan.dat), marking port Inactive.",
+  "concept_tag": "VLAN",
+  "osi_layer": "2"
+}
+
+{
+  "case_id": "CASE-003",
+  "verdict": "FLAGGED",
+  "violations_count": 1,
+  "primary_violation": "Required VLAN 40 is missing from trunk allowed list: only VLANs 10,20,30 are allowed on the trunk.",
+  "evidence": "switchport trunk allowed vlan 10,20,30",
+  "all_violations": [
+    {
+      "rule": "VLAN_PRUNED_FROM_TRUNK",
+      "status": "VIOLATION",
+      "severity": "High",
+      "finding": "Required VLAN 40 is missing from trunk allowed list: only VLANs 10,20,30 are allowed on the trunk.",
+      "evidence": "switchport trunk allowed vlan 10,20,30"
+    }
+  ],
+  "rules_evaluated": 8,
+  "expected_fault": "VLAN 40 (Voice) is pruned from the trunk allowed list on interface Gi0/24 (only 10,20,30 allowed).",
+  "concept_tag": "VLAN",
+  "osi_layer": "2"
+}
+

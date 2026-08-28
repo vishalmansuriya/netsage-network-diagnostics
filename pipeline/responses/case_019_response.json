@@ -1,0 +1,20 @@
+{
+  "case_id": "CASE-019",
+  "root_cause": "Duplicate IP address conflict: static printer IP 192.168.1.25 was not included in 'ip dhcp excluded-address' and was leased to a PC.",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "Syslog '%IP-4-DUPADDR: Duplicate address 192.168.1.25 on GigabitEthernet0/0' and 'ip dhcp binding' shows 192.168.1.25 leased to MAC 0150.eb71.1244.bb.",
+  "next_command": "show ip dhcp conflict",
+  "fix_steps": [
+    "configure terminal",
+    "ip dhcp excluded-address 192.168.1.1 192.168.1.50",
+    "end",
+    "clear ip dhcp binding 192.168.1.25"
+  ],
+  "reasoning_summary": "Overlapping DHCP scope with statically addressed peripherals results in IP collisions when the DHCP server leases out an in-use static IP.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Duplicate IP address detected: 192.168.1.25 is claimed simultaneously by MAC 50eb.7112.44bb and MAC 0011.2233.4455."
+}

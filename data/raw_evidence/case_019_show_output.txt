@@ -1,0 +1,27 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-019
+Concept Tag   : DHCP
+OSI Layer     : Layer 3
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Subnet 192.168.1.0/24. Network Printer has static IP 192.168.1.25. DHCP server pool covers 192.168.1.1 to 192.168.1.100.
+
+[SYMPTOM DESCRIPTION]
+Network printer and Executive PC experience intermittent connection drops; switch console logs duplicate IP warnings.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Core-RTR# show log | include %IP-4-DUPADDR
+%IP-4-DUPADDR: Duplicate address 192.168.1.25 on GigabitEthernet0/0, sourced by 50eb.7112.44bb (PC) and 0011.2233.4455 (Printer)
+
+Core-RTR# show ip dhcp binding | include 192.168.1.25
+192.168.1.25        0150.eb71.1244.bb       Feb 28 2026 10:14 AM    Automatic
+
+Core-RTR# show run | include ip dhcp excluded-address
+ip dhcp excluded-address 192.168.1.1 192.168.1.10
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Duplicate IP address conflict: static printer IP 192.168.1.25 was not included in 'ip dhcp excluded-address' range and was leased to a dynamic host.
+================================================================================

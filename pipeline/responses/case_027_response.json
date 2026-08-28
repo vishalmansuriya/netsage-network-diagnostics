@@ -1,0 +1,22 @@
+{
+  "case_id": "CASE-027",
+  "root_cause": "Path MTU black hole on IPsec Tunnel0 (MTU 1400): 'no ip unreachables' suppresses ICMP Fragmentation Needed packets for large UDP DNS responses.",
+  "osi_layer": 4,
+  "confidence": "medium",
+  "evidence": "Tunnel0 MTU is 1400 bytes, 'ICMP unreachables are never sent', and 'no ip unreachables' configured on Tunnel0.",
+  "next_command": "show interfaces Tunnel0",
+  "fix_steps": [
+    "configure terminal",
+    "interface Tunnel0",
+    "ip unreachables",
+    "ip tcp adjust-mss 1360",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "When UDP payloads exceed 1400 bytes with DF bit set, dropping ICMP Type 3 Code 4 unreachables prevents endpoints from falling back to smaller frame sizes.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "CLEAN",
+  "rule_checker_violation": "All deterministic rules passed."
+}

@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-021",
+  "root_cause": "Standard ACL 10 applied outbound on interface Gi0/3 explicitly denies source subnet 192.168.10.0/24 from reaching Accounting VLAN.",
+  "osi_layer": 3,
+  "confidence": "high",
+  "evidence": "show access-lists 10: '10 deny 192.168.10.0, wildcard bits 0.0.0.255 (450 matches)' on interface Gi0/3.",
+  "next_command": "show access-lists 10",
+  "fix_steps": [
+    "configure terminal",
+    "interface GigabitEthernet0/3",
+    "no ip access-group 10 out",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Standard ACL applied outbound drops all packets matching source 192.168.10.0/24 before egressing onto the destination VLAN.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Standard ACL explicitly denies traffic from subnet 192.168.10.0 (450 drop matches) on an inter-VLAN interface."
+}

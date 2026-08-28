@@ -1,0 +1,33 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-024
+Concept Tag   : ACL
+OSI Layer     : Layer 3
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Guest subnet is VLAN 90 (172.16.90.0/24). Corporate LAN is VLAN 10 (172.16.10.0/24).
+
+[SYMPTOM DESCRIPTION]
+Guest users in VLAN 90 are able to ping and browse internal corporate servers in VLAN 10 despite restrictive guest ACL.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Core-SW# show access-lists BLOCK_GUEST
+Extended IP access list BLOCK_GUEST
+    10 deny ip 172.16.90.0 0.0.0.255 172.16.10.0 0.0.0.255
+    20 permit ip 172.16.90.0 0.0.0.255 any
+
+Core-SW# show run interface GigabitEthernet0/1
+interface GigabitEthernet0/1
+ description Uplink to WAN Router
+ ip access-group BLOCK_GUEST out
+
+Core-SW# show run interface Vlan90
+interface Vlan90
+ description Guest Gateway
+ ip address 172.16.90.1 255.255.255.0
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+ACL BLOCK_GUEST was applied outbound on WAN interface Gi0/1 instead of inbound on interface Vlan90, leaving inter-VLAN guest traffic uninspected.
+================================================================================

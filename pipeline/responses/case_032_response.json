@@ -1,0 +1,22 @@
+{
+  "case_id": "CASE-032",
+  "root_cause": "HQ Firewall ACL WAN_INSPECT blocks CAPWAP control and data UDP ports (5246/5247) required for Branch Lightweight AP discovery with WLC 10.200.1.5.",
+  "osi_layer": 4,
+  "confidence": "high",
+  "evidence": "ACL WAN_INSPECT shows '30 deny ip any host 10.200.1.5 (2481 matches)' and AP status indicates 'Discovery request to 10.200.1.5 timed out'.",
+  "next_command": "show access-lists WAN_INSPECT",
+  "fix_steps": [
+    "configure terminal",
+    "ip access-list extended WAN_INSPECT",
+    "25 permit udp any host 10.200.1.5 eq 5246",
+    "26 permit udp any host 10.200.1.5 eq 5247",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Cisco Lightweight APs discover and join WLCs using CAPWAP control (UDP 5246) and data (UDP 5247). Restrictive perimeter firewalls block these UDP ports by default.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Firewall ACL WAN_INSPECT blocks CAPWAP control and data UDP ports (5246/5247) needed for AP registration with the WLC."
+}

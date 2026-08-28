@@ -1,0 +1,31 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-014
+Concept Tag   : NAT
+OSI Layer     : Layer 3
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Edge Router NAT pool configured with public range. ISP default gateway interface is 198.51.100.1/29.
+
+[SYMPTOM DESCRIPTION]
+Outbound Internet connections drop intermittently; ISP router complains of ARP IP conflicts for 198.51.100.1.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Edge-RTR# show run | section ip nat pool
+ip nat pool CORP_POOL 198.51.100.1 198.51.100.6 netmask 255.255.255.248
+ip nat inside source list 1 pool CORP_POOL overload
+
+Edge-RTR# show ip interface GigabitEthernet0/1
+GigabitEthernet0/1 is up, line protocol is up
+  Internet address is 198.51.100.2/29
+
+Edge-RTR# show ip route 0.0.0.0
+Routing entry for 0.0.0.0/0, supernet
+  Known via "static", distance 1, metric 0, candidate default path
+  * 198.51.100.1
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Dynamic NAT pool CORP_POOL includes 198.51.100.1, which is the upstream ISP default gateway IP address, causing an IP conflict and ARP hijack.
+================================================================================

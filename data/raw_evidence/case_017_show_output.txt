@@ -1,0 +1,33 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-017
+Concept Tag   : DHCP
+OSI Layer     : Layer 7
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Local Router provides DHCP service for Guest subnet 192.168.100.0/24 with scope 192.168.100.100 to 192.168.100.150 (51 IPs).
+
+[SYMPTOM DESCRIPTION]
+Guests in conference room cannot connect to Guest Wi-Fi; DHCP discovery requests receive no offers.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Guest-RTR# show ip dhcp pool GUEST_WIFI
+Pool GUEST_WIFI :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (total/usable)     : 254/51
+ Total addresses                : 51
+ Leased addresses               : 51
+ Excluded addresses             : 203
+ Pending event                  : none
+
+Guest-RTR# show ip dhcp conflict
+IP address        Detection method   Detection time
+
+Guest-RTR# show log | include %DHCPD-4-DECLINE
+%DHCPD-4-DECLINE: Address pool GUEST_WIFI is full, cannot allocate address for client a483.e710.22aa
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+DHCP address pool GUEST_WIFI is completely exhausted (51/51 leased addresses), rejecting new guest client lease requests.
+================================================================================

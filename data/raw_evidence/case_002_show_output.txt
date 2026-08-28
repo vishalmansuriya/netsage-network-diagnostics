@@ -1,0 +1,36 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-002
+Concept Tag   : VLAN
+OSI Layer     : Layer 2
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Access-SW1 port Gi0/5 is configured as an access port in VLAN 50 (192.168.50.0/24) for Engineering department.
+
+[SYMPTOM DESCRIPTION]
+New workstations connected to Access-SW1 port Gi0/5 cannot communicate or get link status on Engineering VLAN 50.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Access-SW1# show interfaces GigabitEthernet0/5 switchport
+Name: Gi0/5
+Switchport: Enabled
+Administrative Mode: static access
+Operational Mode: static access
+Administrative Trunking Encapsulation: negotiate
+Negotiation of Trunking: Off
+Access Mode VLAN: 50 (Inactive)
+Trunking Native Mode VLAN: 1 (default)
+
+Access-SW1# show vlan brief
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/1, Gi0/2, Gi0/3, Gi0/4
+10   Sales                            active    Gi0/6, Gi0/7
+20   HR                               active    Gi0/8, Gi0/9
+30   Management                       active    Gi0/10
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Access port Gi0/5 is assigned to VLAN 50, but VLAN 50 does not exist in the switch VLAN database (vlan.dat), marking port Inactive.
+================================================================================

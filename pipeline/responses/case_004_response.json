@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-004",
+  "root_cause": "Interface Gi0/12 was placed into err-disabled state by STP BPDU Guard upon receiving unexpected BPDUs on a PortFast-enabled edge port.",
+  "osi_layer": 2,
+  "confidence": "high",
+  "evidence": "Acc-SW3# show log: '%SPANTREE-2-BLOCK_BPDUGUARD: Received BPDU on port Gi0/12 with BPDU Guard enabled. Disabling port' and interface status shows 'err-disabled'.",
+  "next_command": "show interfaces GigabitEthernet0/12 status",
+  "fix_steps": [
+    "configure terminal",
+    "interface GigabitEthernet0/12",
+    "shutdown",
+    "no shutdown",
+    "end"
+  ],
+  "reasoning_summary": "Connecting an unmanaged switch to a PortFast port sent Spanning Tree BPDUs, triggering BPDU Guard to protect the topology from loops by shutting down the port.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Interface Gi0/12 entered err-disabled state due to BPDU Guard detecting unauthorized BPDUs on a PortFast-enabled edge port."
+}

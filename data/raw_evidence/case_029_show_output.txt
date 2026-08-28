@@ -1,0 +1,36 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-029
+Concept Tag   : Wireless/L2
+OSI Layer     : Layer 2
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Access switch port Gi0/7 has Cisco Port Security enabled for single MAC address.
+
+[SYMPTOM DESCRIPTION]
+Conference room network jack suddenly stopped working when a second laptop was connected via a mini desk switch.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Acc-SW1# show port-security interface GigabitEthernet0/7
+Port Security              : Enabled
+Port Status                : Secure-shutdown
+Violation Mode             : Shutdown
+Aging Time                 : 0 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 1
+Total MAC Addresses        : 1
+Configured MAC Addresses   : 0
+Sticky MAC Addresses       : 1
+Last Source Address:Vlan   : 0025.90cd.e412:10
+Security Violation Count   : 1
+
+Acc-SW1# show interfaces GigabitEthernet0/7 status
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/7     Conf_Room_Jack     err-disabled 10           auto   auto 10/100/1000BaseTX
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Port Security violation on Gi0/7: maximum MAC address limit of 1 was exceeded when second device connected, placing the port in err-disabled shutdown state.
+================================================================================

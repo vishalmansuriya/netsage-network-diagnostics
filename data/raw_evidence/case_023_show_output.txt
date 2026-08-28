@@ -1,0 +1,29 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-023
+Concept Tag   : ACL
+OSI Layer     : Layer 4
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Branch router interface Gi0/0 connects to ISP. Outbound traffic is inspected by ACL SEC_FILTER.
+
+[SYMPTOM DESCRIPTION]
+Branch office cannot resolve external domain names (e.g., cisco.com); nslookup queries to public DNS 8.8.8.8 time out.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Branch-RTR# show access-lists SEC_FILTER
+Extended IP access list SEC_FILTER
+    10 permit tcp 192.168.1.0 0.0.0.255 any eq www
+    20 permit tcp 192.168.1.0 0.0.0.255 any eq 443
+    30 permit tcp 192.168.1.0 0.0.0.255 any eq domain
+    40 deny ip any any (532 matches)
+
+Branch-RTR# show run interface GigabitEthernet0/0
+interface GigabitEthernet0/0
+ ip access-group SEC_FILTER out
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+ACL SEC_FILTER only permits TCP port 53 (eq domain) but denies UDP port 53 (standard DNS queries operate over UDP 53).
+================================================================================

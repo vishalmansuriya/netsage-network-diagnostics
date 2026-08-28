@@ -1,0 +1,20 @@
+{
+  "case_id": "CASE-026",
+  "root_cause": "Split-brain DNS misconfiguration: Branch-GW name-servers are configured with public resolvers (8.8.8.8) with no conditional forwarder for internal zone 'corp.local'.",
+  "osi_layer": 7,
+  "confidence": "medium",
+  "evidence": "show run: 'ip name-server 8.8.8.8' and 'show hosts' shows 'Default domain is corp.local'; internal DNS server 10.0.0.5 is not referenced.",
+  "next_command": "show hosts",
+  "fix_steps": [
+    "configure terminal",
+    "ip name-server 10.0.0.5 8.8.8.8",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Public recursive resolvers cannot resolve non-public corporate TLDs (.corp.local), requiring internal name servers to be queried first.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "CLEAN",
+  "rule_checker_violation": "All deterministic rules passed."
+}

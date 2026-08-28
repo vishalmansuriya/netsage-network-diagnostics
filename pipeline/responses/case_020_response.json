@@ -1,0 +1,20 @@
+{
+  "case_id": "CASE-020",
+  "root_cause": "DHCP server leased default gateway IP 10.50.0.254 to a client because 'ip dhcp excluded-address' only covered .1 to .50.",
+  "osi_layer": 7,
+  "confidence": "medium",
+  "evidence": "show run: 'default-router 10.50.0.254' while excluded range is '10.50.0.1 10.50.0.50'; 'show ip dhcp binding' shows 10.50.0.254 leased.",
+  "next_command": "show ip dhcp binding 10.50.0.254",
+  "fix_steps": [
+    "configure terminal",
+    "ip dhcp excluded-address 10.50.0.254",
+    "end",
+    "clear ip dhcp binding 10.50.0.254"
+  ],
+  "reasoning_summary": "Any static IP in a subnet must be explicitly excluded from dynamic DHCP pools to prevent address hijacking.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Default gateway IP 10.50.0.254 is leased by DHCP server to a dynamic client because it was not excluded."
+}

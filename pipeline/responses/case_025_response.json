@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-025",
+  "root_cause": "DHCP pool CORP_USERS is configured with decommissioned DNS server IP 10.10.1.20 (which fails ICMP ping) instead of active server 10.10.1.50.",
+  "osi_layer": 7,
+  "confidence": "high",
+  "evidence": "DHCP pool shows 'dns-server 10.10.1.20'; Ping to 10.10.1.20 is 0% success while ping to 10.10.1.50 is 100% success.",
+  "next_command": "show run | section ip dhcp pool",
+  "fix_steps": [
+    "configure terminal",
+    "ip dhcp pool CORP_USERS",
+    "dns-server 10.10.1.50",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Clients received the decommissioned DNS IP during lease acquisition. With no active secondary DNS server, name resolution failed.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Configured DNS / Gateway server 10.10.1.20 is completely unreachable (0% ping success rate)."
+}

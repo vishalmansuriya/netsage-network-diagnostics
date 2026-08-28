@@ -1,0 +1,33 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-003
+Concept Tag   : VLAN
+OSI Layer     : Layer 2
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Access-SW2 uplink Gi0/24 connects to Core-SW1. Voice traffic is in VLAN 40 (10.40.0.0/24), Data traffic in VLAN 10.
+
+[SYMPTOM DESCRIPTION]
+IP phones in Voice VLAN 40 cannot reach the Call Manager server through the core switch link.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Access-SW2# show interfaces Gi0/24 trunk
+Port        Mode             Encapsulation  Status        Native vlan
+Gi0/24      on               802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Gi0/24      10,20,30
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gi0/24      10,20,30
+
+Access-SW2# show run interface Gi0/24
+interface GigabitEthernet0/24
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+VLAN 40 (Voice) is pruned from the trunk allowed list on interface Gi0/24 (only 10,20,30 allowed).
+================================================================================

@@ -1,0 +1,36 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-012
+Concept Tag   : NAT
+OSI Layer     : Layer 3
+Severity      : High
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Gateway Router with LAN on Gi0/0 (192.168.1.1) and WAN on Gi0/1 (203.0.113.2) using NAT Overload.
+
+[SYMPTOM DESCRIPTION]
+Internal clients in subnet 192.168.1.0/24 cannot access Internet servers. NAT translations table is completely empty.
+
+[RAW CISCO IOS CLI EVIDENCE]
+GW-RTR# show run interface GigabitEthernet0/0
+interface GigabitEthernet0/0
+ description LAN Interface
+ ip address 192.168.1.1 255.255.255.0
+ ip nat outside
+
+GW-RTR# show run interface GigabitEthernet0/1
+interface GigabitEthernet0/1
+ description WAN Interface to ISP
+ ip address 203.0.113.2 255.255.255.252
+ ip nat inside
+
+GW-RTR# show ip nat translations
+(empty)
+
+GW-RTR# show run | include ip nat inside source
+ip nat inside source list 1 interface GigabitEthernet0/1 overload
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+NAT inside/outside interface statements are inverted: LAN interface Gi0/0 is configured with 'ip nat outside' and WAN interface Gi0/1 with 'ip nat inside'.
+================================================================================

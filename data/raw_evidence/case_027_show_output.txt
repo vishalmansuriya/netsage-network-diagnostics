@@ -1,0 +1,37 @@
+================================================================================
+NETSAGE AI - RAW EVIDENCE CAPTURE
+Case ID       : CASE-027
+Concept Tag   : DNS
+OSI Layer     : Layer 4
+Severity      : Medium
+================================================================================
+
+[TOPOLOGY CONTEXT]
+Site-to-Site IPsec VPN tunnel between Branch (Tunnel0, MTU 1400) and HQ.
+
+[SYMPTOM DESCRIPTION]
+Workstations fail to resolve DNS records for domains utilizing DNSSEC (large UDP response payloads > 1400 bytes) across IPsec VPN.
+
+[RAW CISCO IOS CLI EVIDENCE]
+Branch-RTR# show interfaces Tunnel0
+Tunnel0 is up, line protocol is up
+  Hardware is Tunnel
+  Internet address is 10.255.0.2/30
+  MTU 1400 bytes, BW 100000 Kbit/sec, DLY 50000 usec
+  Tunnel source 203.0.113.2, destination 198.51.100.2
+  Tunnel protocol/transport IPSEC/IP
+
+Branch-RTR# show ip interface Tunnel0 | include MTU
+  MTU is 1400 bytes
+  ICMP unreachables are never sent
+
+Branch-RTR# show run interface Tunnel0
+interface Tunnel0
+ ip address 10.255.0.2 255.255.255.252
+ tunnel source GigabitEthernet0/0
+ tunnel destination 198.51.100.2
+ no ip unreachables
+
+[GROUND TRUTH / EXPECTED ROOT CAUSE]
+Large UDP DNS responses exceed tunnel MTU 1400 with DF (Don't Fragment) bit set; 'no ip unreachables' suppresses ICMP Fragmentation Needed, creating a PMTU black hole.
+================================================================================

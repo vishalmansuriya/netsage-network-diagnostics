@@ -1,0 +1,23 @@
+{
+  "case_id": "CASE-024",
+  "root_cause": "ACL BLOCK_GUEST was misapplied outbound on WAN interface Gi0/1 instead of inbound on interface Vlan90, leaving inter-VLAN guest traffic uninspected.",
+  "osi_layer": 3,
+  "confidence": "medium",
+  "evidence": "interface Gi0/1 has 'ip access-group BLOCK_GUEST out' while interface Vlan90 has no access-group applied.",
+  "next_command": "show run interface Vlan90",
+  "fix_steps": [
+    "configure terminal",
+    "interface GigabitEthernet0/1",
+    "no ip access-group BLOCK_GUEST out",
+    "interface Vlan90",
+    "ip access-group BLOCK_GUEST in",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Applying the filter on the WAN egress allows guest traffic to route directly between SVIs internally without traversing the WAN interface.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "ACL BLOCK_GUEST was applied outbound on WAN interface Gi0/1 rather than inbound on interface Vlan90, allowing guest traffic to leak into internal corporate VLANs."
+}

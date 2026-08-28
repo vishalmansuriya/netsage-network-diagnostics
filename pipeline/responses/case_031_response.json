@@ -1,0 +1,17 @@
+{
+  "case_id": "CASE-031",
+  "root_cause": "STP Root Guard on Core-SW Gi0/24 placed port into 'Root Inconsistent' blocking state after receiving superior BPDUs with Priority 0 from Dist-SW.",
+  "osi_layer": 2,
+  "confidence": "high",
+  "evidence": "show spanning-tree inconsistentports shows Gi0/24 'Root Inconsistent' and Dist-SW shows 'Root ID Priority 0, This bridge is the root'.",
+  "next_command": "show spanning-tree inconsistentports",
+  "fix_steps": [
+    "Dist-SW(config)# spanning-tree vlan 1-4094 priority 32768"
+  ],
+  "reasoning_summary": "Root Guard protects the root bridge topology by blocking any port that receives BPDUs with lower numerical priority than the current root.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "STP Root Guard blocked the downstream port into 'Root Inconsistent' state after receiving superior BPDUs."
+}

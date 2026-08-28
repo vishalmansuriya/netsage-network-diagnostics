@@ -1,0 +1,21 @@
+{
+  "case_id": "CASE-003",
+  "root_cause": "VLAN 40 (Voice) is pruned from the trunk allowed list on uplink interface Gi0/24.",
+  "osi_layer": 2,
+  "confidence": "high",
+  "evidence": "switchport trunk allowed vlan 10,20,30 on Gi0/24; 'show interfaces Gi0/24 trunk' shows Vlans allowed on trunk: 10,20,30 (VLAN 40 missing).",
+  "next_command": "show interfaces GigabitEthernet0/24 trunk",
+  "fix_steps": [
+    "configure terminal",
+    "interface GigabitEthernet0/24",
+    "switchport trunk allowed vlan add 40",
+    "end",
+    "write memory"
+  ],
+  "reasoning_summary": "Manual trunk allowed VLAN pruning dropped tagged 802.1Q frames for Voice VLAN 40 at the uplink switchport.",
+  "diagnosed_at": "2026-08-28T09:33:03Z",
+  "engine_mode": "simulation",
+  "schema_valid": true,
+  "rule_checker_verdict": "FLAGGED",
+  "rule_checker_violation": "Required VLAN 40 is missing from trunk allowed list: only VLANs 10,20,30 are allowed on the trunk."
+}
